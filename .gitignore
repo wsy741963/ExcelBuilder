@@ -1,5 +1,4 @@
-/2017.xlsx
-/2017_result.xlsx
 /target
+/test
 debug.log
-2020.xlsx
+*.xlsx

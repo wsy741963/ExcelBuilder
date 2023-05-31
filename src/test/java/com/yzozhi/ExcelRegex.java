@@ -16,7 +16,7 @@ public class ExcelRegex {
         long start = System.currentTimeMillis();
 
         // 定义文件
-        String fileRead = "2020_result.xlsx";
+        String fileRead = "2020.xlsx";
         String fileResult = "2020_regex.xlsx";
 
         // 读取表格
@@ -50,9 +50,9 @@ public class ExcelRegex {
             data.setMIRate(reFilter(data.getMIRate()));
             data.setChangeForCr(reFilter(data.getChangeForCr()));
             newDatas.add(data);
+            count++;
+            log.info("校对了第" + count + "条数据");
         }
-        count++;
-        log.info("校对了第" + count + "条数据");
 
         // 写入主表格
         EasyExcelFactory.write(fileResult, NewData.class)
