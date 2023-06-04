@@ -25,18 +25,18 @@ public class Main {
             ExecutorService pool = new ThreadPoolExecutor(5, 8, 6, TimeUnit.SECONDS, new ArrayBlockingQueue<>(5),
                     Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
             // 遍历目录下文件，获取集合
-            Collection<File> fl = FileUtils.listFiles(new File("./"), null, false);
-            if (fl == null) {
-                log.warn("文件不存在");
-                return;
-            }
+            Collection<File> fl = FileUtils.listFiles(new File("./"), new String[] { "*.xlsx","*.xls" }, false);
+            // if (fl == null) {
+            // log.warn("文件不存在");
+            // return;
+            // }
             List<Callable<String>> tasks = new ArrayList<>();
             for (File file : fl) {
-                String fn = Regex.regex(file.getName(), "(20\\d{2}.xlsx)", 1);
+                String fn = Regex.regex(file.getName(), "(20\\d{2}.xlsx?)", 1);
                 if (!fn.equals("")) {
                     log.warn("发现文件:" + fn);
                     String year = fn.substring(0, 4);
-                    // 使用文件参数调用线程池
+                    // 使用文件参数调用线程
                     Callable<String> call = new CallableExcelBuilder(year);
                     // 加入线程集合
                     tasks.add(call);
