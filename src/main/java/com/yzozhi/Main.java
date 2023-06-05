@@ -25,7 +25,7 @@ public class Main {
             ExecutorService pool = new ThreadPoolExecutor(5, 8, 6, TimeUnit.SECONDS, new ArrayBlockingQueue<>(5),
                     Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
             // 遍历目录下文件，获取集合
-            Collection<File> fl = FileUtils.listFiles(new File("./"), new String[] { "*.xlsx","*.xls" }, false);
+            Collection<File> fl = FileUtils.listFiles(new File("./"), new String[] { "*.xlsx", "*.xls" }, false);
             // if (fl == null) {
             // log.warn("文件不存在");
             // return;
@@ -36,7 +36,7 @@ public class Main {
                 if (!fn.equals("")) {
                     log.warn("发现文件:" + fn);
                     String year = fn.substring(0, 4);
-                    // 使用文件参数调用线程
+                    // 使用文件参数生成线程对象
                     Callable<String> call = new CallableExcelBuilder(year);
                     // 加入线程集合
                     tasks.add(call);
