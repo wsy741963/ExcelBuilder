@@ -35,7 +35,7 @@ public class CallableExcelBuilder implements Callable<String> {
                   if (FileUtils.getFile(fileResult).exists()
                               || FileUtils.getFile(fileCache).exists()) {
                         log.error("-->" + year + ":上次生成的文件已存在!退出!请删除上次结果!");
-                        return year+"失败!";
+                        return year + "失败!";
                   }
 
                   // 写入表头
@@ -46,7 +46,7 @@ public class CallableExcelBuilder implements Callable<String> {
                   // 记录数据总数
                   int count = 0;
                   // 循环处理每个sheet
-                  String[] sheetName = { "地区层级", "覆盖人口", "全国合计", "全国男", "全国女", "城市合计", "城市男", "城市女", "农村合计", "农村男",
+                  String[] sheetName = { "地区数据", "覆盖人口", "全国合计", "全国男", "全国女", "城市合计", "城市男", "城市女", "农村合计", "农村男",
                               "农村女", "全国合计死亡", "全国男死亡", "全国女死亡", "城市合计死亡", "城市男死亡", "城市女死亡", "农村合计死亡", "农村男死亡",
                               "农村女死亡", "东部", "东部城市", "东部农村", "中部", "中部城市", "中部农村", "西部", "西部城市", "西部农村", "东部死亡",
                               "东部城市死亡", "东部农村死亡", "中部死亡", "中部城市死亡", "中部农村死亡", "西部死亡", "西部城市死亡", "西部农村死亡" };
@@ -107,7 +107,7 @@ public class CallableExcelBuilder implements Callable<String> {
                                           .doWrite(newDatas);
                               count += newDatas.size();
                               log.warn("\n================================\n写入主表格:" + newDatas.size()
-                              + "条数据,释放缓存\n================================");
+                                          + "条数据,释放缓存\n================================");
                               FileHandle.fileRename(year);
                               datasListener.clean();
                               datas.clear();
@@ -131,8 +131,8 @@ public class CallableExcelBuilder implements Callable<String> {
                               + "条数据\n耗时:" + (end - start) / 1000 + "s\n================================");
             } catch (Exception e) {
                   log.error(e.getMessage());
-                  return year+"失败!";
+                  return year + "失败!";
             }
-            return year+"成功!";
+            return year + "成功!";
       }
 }
