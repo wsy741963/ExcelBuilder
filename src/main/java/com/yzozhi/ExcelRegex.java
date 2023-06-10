@@ -98,7 +98,7 @@ public class ExcelRegex {
     public static String reFilter(String str) {
         try {
             // 匹配到数字，校验,否则跳过
-            if (Regex.regex(str, "([\\d])", 1).equals("")) {
+            if (Regex.regex(str, "(\\d)", 1).equals("")) {
                 return str;
             }
             // 匹配规则
@@ -120,6 +120,10 @@ public class ExcelRegex {
             // str = str.replaceAll("Q", "0.");
             // str = str.replaceAll("Q", "0.");
 
+            // 如果还剩余未识别字符，输出log
+            if (!Regex.regex(str, "([^\\d\\.])", 1).equals("")) {
+                log.warn("需要手动校对:" + str);
+            }
             return str;
         } catch (Exception e) {
             log.error(e.getMessage());
