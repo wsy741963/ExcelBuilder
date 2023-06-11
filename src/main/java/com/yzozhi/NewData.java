@@ -1,9 +1,10 @@
 package com.yzozhi;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import lombok.Data;
 
 //lombok生成所有构造器
-@lombok.Data
+@Data
 public class NewData {
    // 写入需要按顺序需
    // 原表没有的列，需要处理的赋值
