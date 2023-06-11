@@ -131,11 +131,15 @@ public class ExcelRegex {
             // str = str.replaceAll("Q", "0.");
 
             // 如果还剩余未识别字符，输出log
-            if (!Regex.regex(str, "([^\\d\\.\\-~])", 1).equals("")) {
-                log.warn("需要手动校对:" + str);
-                // 小数点缺失正则匹配
-            } else if (!Regex.regex(str, "(^0\\d)", 1).equals("")) {
-                log.warn("需要手动校对小数点:" + str);
+            if (!Regex.regex(str, "([^\\d\\.\\-~〜\\+])", 1).equals("")) {
+                if (Regex.regex(str, "(C\\d)", 1).equals("")) {
+                    log.warn("需要手动校对:" + str);
+                }
+                // 小数点缺失正则匹配自动校对
+            } else if (!Regex.regex(str, "(^-?0\\d)", 1).equals("")) {
+                String newStr = str.substring(0, 1) + "." + str.substring(1);
+                log.warn("自动校对小数点:" + str + "->" + newStr);
+                str = newStr;
             }
             return str;
         } catch (Exception e) {

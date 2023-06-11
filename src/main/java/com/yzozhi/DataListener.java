@@ -33,15 +33,17 @@ public class DataListener extends AnalysisEventListener<Data> {
     // 记录解析的数据总数
     int count = 0;
 
-    @Override
-    public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
-        try {
-            headMaps.putAll(headMap);
-            log.warn("解析到表头:{}", headMap.values());
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-    }
+    // 监听表头
+    // @Override
+    // public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext
+    // context) {
+    // try {
+    // headMaps.putAll(headMap);
+    // log.warn("解析到表头:{}", headMap.values());
+    // } catch (Exception e) {
+    // log.error(e.getMessage());
+    // }
+    // }
 
     @Override
     public void invoke(Data data, AnalysisContext Context) {
@@ -54,7 +56,7 @@ public class DataListener extends AnalysisEventListener<Data> {
     // 所有都解析完毕后要执行的操作
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-        log.warn("\n================================\n读取了共" + count
+        log.warn("\n\n================================\n读取了共" + count
                 + "条数据\n================================\n");
     }
 }
