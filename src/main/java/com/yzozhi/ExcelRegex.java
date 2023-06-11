@@ -98,9 +98,6 @@ public class ExcelRegex {
                 }
             }
         } catch (Exception e) {
-            if (e.getMessage() == null) {
-                log.info(e.getMessage());
-            }
             log.error(e.getMessage());
         }
     }
@@ -143,10 +140,6 @@ public class ExcelRegex {
             }
             return str;
         } catch (Exception e) {
-            if (e.getMessage() == null) {
-                log.info(e.getMessage());
-                return str;
-            }
             log.error(e.getMessage());
             return str;
         }
