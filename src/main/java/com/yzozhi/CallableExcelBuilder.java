@@ -91,7 +91,7 @@ public class CallableExcelBuilder implements Callable<String> {
                               } else if (Regex.regex(sheet, "(女)", 1).equals("女")) {
                                     sex = "女";
                               }
-                              log.warn("location:" + location + "\tsex:" + sex + "\tage:" + year);
+                              log.warn("\n处理了location:" + location + "\tsex:" + sex + "\tage:" + year);
                               // 调用自定义方法，重构数据
                               List<NewData> newDatas = DatasBuilder.datasBuild(datas, year, location, sex);
                               newDatasAll.addAll(newDatas);

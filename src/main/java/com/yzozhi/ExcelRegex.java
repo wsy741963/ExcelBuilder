@@ -49,6 +49,7 @@ public class ExcelRegex {
                                 .sheet(i)
                                 .doRead();
                         List<OldData> datas = datasListener.getDatas();
+                        log.warn("\n处理表" + sheetNames[i]);
                         for (OldData data : datas) {
                             // 校正原数据
                             data.setA(reFilter(data.getA()));
@@ -91,7 +92,7 @@ public class ExcelRegex {
                     }
                     excelWriter.finish();
                     long end = System.currentTimeMillis();
-                    log.warn("\n================================\n写入完成,共耗时:"
+                    log.warn("\n================================\n写入完成,共写入" + count + "条数据，共耗时:"
                             + (end - start) / 1000
                             + "s\n================================");
                 }
