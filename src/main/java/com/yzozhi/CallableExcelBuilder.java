@@ -112,7 +112,6 @@ public class CallableExcelBuilder implements Callable<String> {
                               datasListener.clean();
                               datas.clear();
                               newDatas.clear();
-                              // Thread.sleep(1000);
                         }
                   }
 

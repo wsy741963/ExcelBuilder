@@ -7,7 +7,7 @@ public class Test {
     @org.junit.Test
     public void file() {
         FileHandle.fileRename("2020");
-        String s = ExcelRegex.reFilter("L()7)!oJ、");
-        log.info("Success:" + s);
+        String s = ExcelRegex.reFilter("Q,IL()7)!oJ、i");
+        log.info("result:" + s);
     }
 }
