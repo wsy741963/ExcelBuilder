@@ -1,6 +1,5 @@
 package com.yzozhi;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -8,6 +7,7 @@ import java.util.concurrent.Callable;
 import org.apache.commons.io.FileUtils;
 
 import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelWriter;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,21 +27,19 @@ public class CallableExcelBuilder implements Callable<String> {
                   log.warn("启动!\t" + year + "开始计时");
 
                   // 得到文件路径
-                  String fileRead = year + ".xlsx";
-                  String fileCache = year + "_cache.xlsx";
+                  String fileRead = year + "_regex.xlsx";
                   String fileResult = year + "_result.xlsx";
 
                   // 判断是否存在上次文件
-                  if (FileUtils.getFile(fileResult).exists()
-                              || FileUtils.getFile(fileCache).exists()) {
+                  if (FileUtils.getFile(fileResult).exists()) {
                         log.error("-->" + year + ":上次生成的文件已存在!退出!请删除上次结果!");
                         return year + "失败!";
                   }
 
-                  // 写入表头
-                  List<NewData> emptyDatas = new ArrayList<>();
-                  EasyExcelFactory.write(fileCache, NewData.class).sheet("result").needHead(true)
-                              .doWrite(emptyDatas);
+                  // 创建读对象,用于缓存所有数据
+                  List<NewData> newDatasAll = new ArrayList<NewData>();
+                  // 创建写对象,用于写流
+                  ExcelWriter excelWriter = EasyExcelFactory.write(fileResult).build();
 
                   // 记录数据总数
                   int count = 0;
@@ -96,33 +94,19 @@ public class CallableExcelBuilder implements Callable<String> {
                               log.warn("location:" + location + "\tsex:" + sex + "\tage:" + year);
                               // 调用自定义方法，重构数据
                               List<NewData> newDatas = DatasBuilder.datasBuild(datas, year, location, sex);
-
-                              // 写入主表格
-                              EasyExcelFactory.write(fileResult, NewData.class)
-                                          // 是否在原有数据上追加写入数据，否则直接清空
-                                          .withTemplate(fileCache)
-                                          .sheet()
-                                          // 是否写入表头
-                                          .needHead(false)
-                                          .doWrite(newDatas);
+                              newDatasAll.addAll(newDatas);
                               count += newDatas.size();
-                              log.warn("\n================================\n写入主表格:" + newDatas.size()
-                                          + "条数据,释放缓存\n================================");
-                              FileHandle.fileRename(year);
+                              log.warn("\n================================\n缓存:" + newDatas.size()
+                                          + "条数据,释放旧缓存\n================================");
                               datasListener.clean();
                               datas.clear();
                               newDatas.clear();
                         }
                   }
-
-                  // 重命名
-                  if (FileUtils.getFile(fileCache).exists()) {
-                        FileUtils.moveFile(new File(fileCache), new File(fileResult));
-                        // Thread.sleep(200);
-                        log.info("-->" + fileCache + "重命名成功");
-                  } else {
-                        log.warn("-->" + fileCache + "不存在");
-                  }
+                  // 写入流
+                  excelWriter.write(newDatasAll,
+                              EasyExcelFactory.writerSheet(0, "result").head(NewData.class).build());
+                  excelWriter.finish();
 
                   // 计时结束
                   long end = System.currentTimeMillis();
