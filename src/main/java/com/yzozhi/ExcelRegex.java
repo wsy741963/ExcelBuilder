@@ -111,7 +111,7 @@ public class ExcelRegex {
             if (Regex.regex(str, "(\\d)", 1).equals("")) {
                 return str;
             }
-            // 匹配规则
+            // 纠正规则
             str = str.replaceAll(" ", "");
             str = str.replaceAll("\\(\\)", "0");
             str = str.replaceAll("\\(", "1");
@@ -133,6 +133,9 @@ public class ExcelRegex {
             // 如果还剩余未识别字符，输出log
             if (!Regex.regex(str, "([^\\d\\.\\-~])", 1).equals("")) {
                 log.warn("需要手动校对:" + str);
+                // 小数点缺失正则匹配
+            } else if (!Regex.regex(str, "(^0\\d)", 1).equals("")) {
+                log.warn("需要手动校对小数点:" + str);
             }
             return str;
         } catch (Exception e) {

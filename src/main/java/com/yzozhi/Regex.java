@@ -12,7 +12,7 @@ public class Regex {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(str);
         if (matcher.find()) {
-            log.info(matcher.group(group));
+            log.info("匹配到:" + matcher.group(group));
             return matcher.group(group);
         } else {
             return "";
