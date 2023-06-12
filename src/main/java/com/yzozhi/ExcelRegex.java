@@ -140,6 +140,9 @@ public class ExcelRegex {
                 String fStr = str.substring(0, 1) + "." + str.substring(1);
                 log.warn("自动校对小数点:" + str + "->" + fStr);
                 str = fStr;
+                // 匹配无小数点或多小数点的情况
+            } else if (Regex.regex(str, "(\\.{1}\\d)", 1).equals("")) {
+                log.warn("需要手动校对小数点:" + str);
             }
             return str;
         } catch (Exception e) {
