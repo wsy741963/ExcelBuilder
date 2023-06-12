@@ -14,7 +14,7 @@ public class Regex {
             Matcher matcher = pattern.matcher(str);
             if (matcher.find()) {
                 String re = matcher.group(group);
-                log.info("匹配到:" + re);
+                // log.info("匹配到:" + re);
                 return re;
             } else {
                 return "";
