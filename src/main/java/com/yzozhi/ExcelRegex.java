@@ -29,7 +29,7 @@ public class ExcelRegex {
 
                     if (FileUtils.getFile(fileResult).exists()) {
                         log.error("-->" + year + ":上次生成的文件已存在!退出!请删除上次结果!");
-                        return;
+                        break;
                     }
 
                     String[] sheetNames = { "3-2", "4-1", "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9",
@@ -108,27 +108,29 @@ public class ExcelRegex {
             if (Regex.regex(str, "(\\d)", 1).equals("")) {
                 return str;
             }
-            String newStr = new String();
+            String newStr = null;
             // 纠正规则
             newStr = str.replaceAll(" ", "");
-            newStr = str.replaceAll("\\(\\)", "0");
-            newStr = str.replaceAll("\\(", "1");
-            newStr = str.replaceAll("\\)", "1");
-            newStr = str.replaceAll("L", "1.");
-            newStr = str.replaceAll("O", "0");
-            newStr = str.replaceAll("o", "0");
-            newStr = str.replaceAll("!", "1");
-            newStr = str.replaceAll("I", "1");
-            newStr = str.replaceAll("i", "1");
-            newStr = str.replaceAll("\\[", "1");
-            newStr = str.replaceAll("\\]", "1");
-            newStr = str.replaceAll(",", ".");
-            newStr = str.replaceAll("、", ".");
-            newStr = str.replaceAll("J", "1");
-            newStr = str.replaceAll("Q", "0.");
+            newStr = newStr.replaceAll("\\(\\)", "0");
+            newStr = newStr.replaceAll("\\(", "1");
+            newStr = newStr.replaceAll("\\)", "1");
+            newStr = newStr.replaceAll("L", "1.");
+            newStr = newStr.replaceAll("O", "0");
+            newStr = newStr.replaceAll("o", "0");
+            newStr = newStr.replaceAll("!", "1");
+            newStr = newStr.replaceAll("I", "1");
+            newStr = newStr.replaceAll("i", "1");
+            newStr = newStr.replaceAll("\\[", "1");
+            newStr = newStr.replaceAll("\\]", "1");
+            newStr = newStr.replaceAll(",", ".");
+            newStr = newStr.replaceAll("、", ".");
+            newStr = newStr.replaceAll("J", "1");
+            newStr = newStr.replaceAll("Q", "0.");
 
             // 输出纠正记录到日志
-            log.warn("自动校对:" + str + "->" + newStr);
+            if (!newStr.equals(str)) {
+                log.warn("自动校对:" + str + " -> " + newStr);
+            }
             str = newStr;
             // 如果还剩余未识别字符，输出log
             if (!Regex.regex(str, "([^\\d\\.\\-~〜\\+])", 1).equals("")) {
@@ -138,10 +140,10 @@ public class ExcelRegex {
                 // 小数点缺失正则匹配自动校对
             } else if (!Regex.regex(str, "(^-?0\\d)", 1).equals("")) {
                 String fStr = str.substring(0, 1) + "." + str.substring(1);
-                log.warn("自动校对小数点:" + str + "->" + fStr);
+                log.warn("自动校对小数点:" + str + " -> " + fStr);
                 str = fStr;
                 // 匹配无小数点或多小数点的情况
-            } else if (Regex.regex(str, "(\\.{1}\\d)", 1).equals("")) {
+            } else if (Regex.regex(str, "(\\.{1}\\d\\-?|\\d{1})", 1).equals("")) {
                 log.warn("需要手动校对小数点:" + str);
             }
             return str;
