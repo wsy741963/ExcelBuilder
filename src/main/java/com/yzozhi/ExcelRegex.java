@@ -108,25 +108,28 @@ public class ExcelRegex {
             if (Regex.regex(str, "(\\d)", 1).equals("")) {
                 return str;
             }
+            String newStr = new String();
             // 纠正规则
-            str = str.replaceAll(" ", "");
-            str = str.replaceAll("\\(\\)", "0");
-            str = str.replaceAll("\\(", "1");
-            str = str.replaceAll("\\)", "1");
-            str = str.replaceAll("L", "1.");
-            str = str.replaceAll("O", "0");
-            str = str.replaceAll("o", "0");
-            str = str.replaceAll("!", "1");
-            str = str.replaceAll("I", "1");
-            str = str.replaceAll("i", "1");
-            str = str.replaceAll("\\[", "1");
-            str = str.replaceAll("\\]", "1");
-            str = str.replaceAll(",", ".");
-            str = str.replaceAll("、", ".");
-            str = str.replaceAll("J", "1");
-            str = str.replaceAll("Q", "0.");
-            // str = str.replaceAll("Q", "0.");
+            newStr = str.replaceAll(" ", "");
+            newStr = str.replaceAll("\\(\\)", "0");
+            newStr = str.replaceAll("\\(", "1");
+            newStr = str.replaceAll("\\)", "1");
+            newStr = str.replaceAll("L", "1.");
+            newStr = str.replaceAll("O", "0");
+            newStr = str.replaceAll("o", "0");
+            newStr = str.replaceAll("!", "1");
+            newStr = str.replaceAll("I", "1");
+            newStr = str.replaceAll("i", "1");
+            newStr = str.replaceAll("\\[", "1");
+            newStr = str.replaceAll("\\]", "1");
+            newStr = str.replaceAll(",", ".");
+            newStr = str.replaceAll("、", ".");
+            newStr = str.replaceAll("J", "1");
+            newStr = str.replaceAll("Q", "0.");
 
+            // 输出纠正记录到日志
+            log.warn("自动校对:" + str + "->" + newStr);
+            str = newStr;
             // 如果还剩余未识别字符，输出log
             if (!Regex.regex(str, "([^\\d\\.\\-~〜\\+])", 1).equals("")) {
                 if (Regex.regex(str, "(C\\d)", 1).equals("")) {
@@ -134,9 +137,9 @@ public class ExcelRegex {
                 }
                 // 小数点缺失正则匹配自动校对
             } else if (!Regex.regex(str, "(^-?0\\d)", 1).equals("")) {
-                String newStr = str.substring(0, 1) + "." + str.substring(1);
-                log.warn("自动校对小数点:" + str + "->" + newStr);
-                str = newStr;
+                String fStr = str.substring(0, 1) + "." + str.substring(1);
+                log.warn("自动校对小数点:" + str + "->" + fStr);
+                str = fStr;
             }
             return str;
         } catch (Exception e) {
