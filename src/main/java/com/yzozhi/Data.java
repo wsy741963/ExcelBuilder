@@ -7,7 +7,7 @@ import com.alibaba.excel.annotation.ExcelProperty;
 @lombok.Data
 public class Data {
    // 私有成员变量，匹配列名,无顺序
-   // 原表没有的列，需要处理的赋值
+   // 原表没有的列，需要处理
    @ExcelProperty("year")
    private String year;
 
