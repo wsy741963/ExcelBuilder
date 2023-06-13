@@ -46,8 +46,8 @@ public class DatasBuilder {
                     for (int i = 0; i < locationAndSex.length; i++) {
                         NewData newData = new NewData();
                         // 匹配地区和性别
-                        location = Regex.regex(locationAndSex[i], "(\\w+)_(\\w+)", 1);
-                        sex = Regex.regex(locationAndSex[i], "(\\w+)_(\\w+)", 2);
+                        location = Regex.regex(locationAndSex[i], "(\\w+)_(\\w+)", 0);
+                        sex = Regex.regex(locationAndSex[i], "(\\w+)_(\\w+)", 1);
                         String funcName = location + sex.substring(0, 1).toUpperCase() + sex.substring(1);
                         // 反射获取覆盖率
                         Field field = dataClass.getDeclaredField(funcName);
