@@ -1,8 +1,7 @@
 package com.yzozhi;
 
 import java.io.File;
-// import java.util.ArrayList;
-// import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,38 +19,44 @@ public class ExcelRegex {
             long start = System.currentTimeMillis();
             Collection<File> fl = FileUtils.listFiles(new File("./"), null, false);
             // 封装所有表头
-            // String[] names = { "序号No.", "location_level", "location", "cover_population",
-            // "num_incidence", "num_death",
-            // "mv_percent", "dco_percent,m_i_rate", "change_for_cr", "接受Accepted" };
-            // String[] names2 = { "age", "national_total", "national_male",
-            // "national_female", "city_total",
-            // "city_male", "city_female", "village_total", "village_male",
-            // "village_female",
-            // "east_total", "east_male", "east_female", "central_total", "central_male",
-            // "central_female", "west_total", "west_male", "west_female" };
-            // String[] names3 = { "cause", "", "num_incidence", "freq_incidence",
-            // "0", "1", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55",
-            // "60", "65", "70", "75",
-            // "80", "85", "rate_crude", "asr_china_incidence", "asr_world_incidence",
-            // "cum_rate_64_incidence",
-            // "cum_rate_74_incidence" };
-            // String[] names4 = { "cause", "", "num_death", "freq_death", "0", "1", "5",
-            // "10", "15", "20", "25", "30",
-            // "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85",
-            // "rate_crude", "asr_china_death",
-            // "asr_world_death", "cum_rate_64_death", "cum_rate_74_death" };
-            // String[] names5 = { "cause", "", "num_incidence", "freq_incidence",
-            // "rate_crude", "asr_world_incidence",
-            // "cum_rate_64_incidence", "cum_rate_74_incidence", "num_incidence1",
-            // "freq_incidence1",
-            // "rate_crude1", "asr_world_incidence1", "cum_rate_64_incidence1",
-            // "cum_rate_74_incidence1" };
-            // String[] names6 = { "cause", "", "num_death", "freq_death", "rate_crude",
-            // "asr_world_death",
-            // "cum_rate_64_death", "cum_rate_74_death", "num_death1", "freq_death1",
-            // "rate_crude1",
-            // "asr_china_death1", "asr_world_death1", "cum_rate_64_death1",
-            // "cum_rate_74_death1" };
+            String[] names = { "序号No.", "location_level", "location", "cover_population",
+                    "num_incidence", "num_death",
+                    "mv_percent", "dco_percent", "m_i_rate", "change_for_cr", "接受Accepted" };
+            List<List<String>> lists = listBuilder(names);
+            String[] names2 = { "age", "national_total", "national_male",
+                    "national_female", "city_total",
+                    "city_male", "city_female", "village_total", "village_male",
+                    "village_female",
+                    "east_total", "east_male", "east_female", "central_total", "central_male",
+                    "central_female", "west_total", "west_male", "west_female" };
+            List<List<String>> lists2 = listBuilder(names2);
+            String[] names3 = { "cause", "", "num_incidence", "freq_incidence",
+                    "0", "1", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55",
+                    "60", "65", "70", "75",
+                    "80", "85", "rate_crude", "asr_china_incidence", "asr_world_incidence",
+                    "cum_rate_64_incidence",
+                    "cum_rate_74_incidence" };
+            List<List<String>> lists3 = listBuilder(names3);
+            String[] names4 = { "cause", "", "num_death", "freq_death", "0", "1", "5",
+                    "10", "15", "20", "25", "30",
+                    "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85",
+                    "rate_crude", "asr_china_death",
+                    "asr_world_death", "cum_rate_64_death", "cum_rate_74_death" };
+            List<List<String>> lists4 = listBuilder(names4);
+            String[] names5 = { "cause", "", "num_incidence", "freq_incidence",
+                    "rate_crude", "asr_world_incidence",
+                    "cum_rate_64_incidence", "cum_rate_74_incidence", "num_incidence1",
+                    "freq_incidence1",
+                    "rate_crude1", "asr_world_incidence1", "cum_rate_64_incidence1",
+                    "cum_rate_74_incidence1" };
+            List<List<String>> lists5 = listBuilder(names5);
+            String[] names6 = { "cause", "", "num_death", "freq_death", "rate_crude",
+                    "asr_world_death",
+                    "cum_rate_64_death", "cum_rate_74_death", "num_death1", "freq_death1",
+                    "rate_crude1",
+                    "asr_china_death1", "asr_world_death1", "cum_rate_64_death1",
+                    "cum_rate_74_death1" };
+            List<List<String>> lists6 = listBuilder(names6);
 
             // 指定sheet名
             String[] sheetNames = { "3-2", "4-1", "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9",
@@ -124,9 +129,30 @@ public class ExcelRegex {
                             log.info("校对了第" + count + "条数据");
                         }
                         count += datas.size();
+
+                        // 表头判定
+                        List<List<String>> nameLists = new ArrayList<>();
+                        if (i == 0) {
+                            nameLists = lists;
+                        } else if (i == 1) {
+                            nameLists = lists2;
+                            // 2-10
+                        } else if (i > 1 && i < 11) {
+                            nameLists = lists3;
+                            // 11-19
+                        } else if (i > 10 && i < 20) {
+                            nameLists = lists4;
+                            // 20-28
+                        } else if (i > 19 && i < 29) {
+                            nameLists = lists5;
+                            // 29-37
+                        } else if (i > 28 && i < 38) {
+                            nameLists = lists6;
+                        }
+
                         // 写入sheet
                         excelWriter.write(datas,
-                                EasyExcelFactory.writerSheet(i, sheetName).head(OldData.class).build());
+                                EasyExcelFactory.writerSheet(i, sheetName).head(nameLists).build());
                         // 清除缓存
                         datasListener.clean();
                     }
@@ -213,5 +239,16 @@ public class ExcelRegex {
             log.error(e.getMessage());
             return str;
         }
+    }
+
+    public static List<List<String>> listBuilder(String[] names) {
+        // 封装表头对象
+        List<List<String>> lists = new ArrayList<>();
+        for (String name : names) {
+            List<String> data = new ArrayList<>();
+            data.add(name);
+            lists.add(data);
+        }
+        return lists;
     }
 }
