@@ -133,24 +133,26 @@ public class ExcelRegex {
             }
             str = newStr;
             // 如果还剩余未识别字符，输出log
-            if (!Regex.regex(str, "([^\\d+\\.\\-~〜\\+])", 0).equals("")) {
-                if (Regex.regex(str, "(^C\\d|^G\\d)", 0).equals("")) {
+            if (!Regex.regex(str, "([^\\d\\.\\-~〜\\+])", 0).equals("")) {
+                if (Regex.regex(str, "(^C\\d$|^G\\d$)", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
                 }
                 // 小数点缺失正则匹配自动校对
-            } else if (!Regex.regex(str, "(^-?0\\d+)", 0).equals("")) {
+            } else if (!Regex.regex(str, "(^-?0\\d+$)", 0).equals("")) {
                 String fStr = null;
                 if (!str.substring(0, 1).equals("-")) {
                     fStr = str.substring(0, 1) + "." + str.substring(1);
                     log.warn("自动校对小数点:" + str + " -> " + fStr);
-                }else{
+                } else {
                     fStr = str.substring(0, 2) + "." + str.substring(2);
                     log.warn("自动校对小数点:" + str + " -> " + fStr);
                 }
                 str = fStr;
                 // 匹配无小数点或多小数点的情况
-            } else if (Regex.regex(str, "(^\\-?\\d+\\.\\d+|\\d{1})", 0).equals("")) {
-                log.warn("需要手动校对小数点:" + str);
+            } else if (Regex.regex(str, "(^\\-?\\d+\\.\\d+$|^\\-?\\d$)", 0).equals("")) {
+                if (str.length() < 6) {
+                    log.warn("需要手动校对小数点:" + str);
+                }
             }
             return str;
         } catch (Exception e) {
