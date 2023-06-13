@@ -1,8 +1,8 @@
 package com.yzozhi;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+// import java.util.ArrayList;
+// import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,54 +20,25 @@ public class ExcelRegex {
             long start = System.currentTimeMillis();
             Collection<File> fl = FileUtils.listFiles(new File("./"), null, false);
             // 封装所有表头
-            List<String> names = new ArrayList<>(
-                    Arrays.asList("序号No.", "location_level", "location",
-                            "cover_population", "num_incidence", "num_death", "mv_percent",
-                            "dco_percent,m_i_rate",
-                            "change_for_cr", "接受Accepted"));
-            List<String> names2 = new ArrayList<>(
-                    Arrays.asList("age", "national_total", "national_male", "national_female", "city_total",
-                            "city_male", "city_female", "village_total", "village_male", "village_female",
-                            "east_total", "east_male", "east_female", "central_total", "central_male",
-                            "central_female", "west_total", "west_male", "west_female"));
-            List<String> names3 = new ArrayList<>(
-                    Arrays.asList("cause", "", "num_incidence", "freq_incidence",
-                            "0", "1", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60",
-                            "65",
-                            "70", "75", "80", "85", "rate_crude", "asr_china_incidence",
-                            "asr_world_incidence",
-                            "cum_rate_64_incidence", "cum_rate_74_incidence"));
-            List<String> names4 = new ArrayList<>(
-                    Arrays.asList("cause", "", "num_death", "freq_death", "0", "1", "5", "10", "15", "20",
-                            "25",
-                            "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85",
-                            "rate_crude", "asr_china_death", "asr_world_death", "cum_rate_64_death",
-                            "cum_rate_74_death"));
-            List<String> names5 = new ArrayList<>(
-                    Arrays.asList("cause", "", "num_incidence", "freq_incidence", "rate_crude",
-                            "asr_world_incidence", "cum_rate_64_incidence", "cum_rate_74_incidence",
-                            "num_incidence1", "freq_incidence1", "rate_crude1", "asr_world_incidence1",
-                            "cum_rate_64_incidence1", "cum_rate_74_incidence1"));
-            List<String> names6 = new ArrayList<>(Arrays.asList("cause", "", "num_death", "freq_death",
-                    "rate_crude", "asr_world_death", "cum_rate_64_death", "cum_rate_74_death", "num_death1",
-                    "freq_death1", "rate_crude1", "asr_china_death1", "asr_world_death1",
-                    "cum_rate_64_death1", "cum_rate_74_death1"));
-            // 嵌套封装
-            List<List<String>> allNames = new ArrayList<>();
-            allNames.add(names);
-            allNames.add(names2);
-            for (int j = 0; j < 9; j++) {
-                allNames.add(names3);
-            }
-            for (int j = 0; j < 9; j++) {
-                allNames.add(names4);
-            }
-            for (int j = 0; j < 9; j++) {
-                allNames.add(names5);
-            }
-            for (int j = 0; j < 9; j++) {
-                allNames.add(names6);
-            }
+            // String[] names = { "序号No.", "location_level", "location", "cover_population", "num_incidence", "num_death",
+            //         "mv_percent", "dco_percent,m_i_rate", "change_for_cr", "接受Accepted" };
+            // String[] names2 = { "age", "national_total", "national_male", "national_female", "city_total",
+            //         "city_male", "city_female", "village_total", "village_male", "village_female",
+            //         "east_total", "east_male", "east_female", "central_total", "central_male",
+            //         "central_female", "west_total", "west_male", "west_female" };
+            // String[] names3 = { "cause", "", "num_incidence", "freq_incidence",
+            //         "0", "1", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75",
+            //         "80", "85", "rate_crude", "asr_china_incidence", "asr_world_incidence", "cum_rate_64_incidence",
+            //         "cum_rate_74_incidence" };
+            // String[] names4 = { "cause", "", "num_death", "freq_death", "0", "1", "5", "10", "15", "20", "25", "30",
+            //         "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "rate_crude", "asr_china_death",
+            //         "asr_world_death", "cum_rate_64_death", "cum_rate_74_death" };
+            // String[] names5 = { "cause", "", "num_incidence", "freq_incidence", "rate_crude", "asr_world_incidence",
+            //         "cum_rate_64_incidence", "cum_rate_74_incidence", "num_incidence1", "freq_incidence1",
+            //         "rate_crude1", "asr_world_incidence1", "cum_rate_64_incidence1", "cum_rate_74_incidence1" };
+            // String[] names6 = { "cause", "", "num_death", "freq_death", "rate_crude", "asr_world_death",
+            //         "cum_rate_64_death", "cum_rate_74_death", "num_death1", "freq_death1", "rate_crude1",
+            //         "asr_china_death1", "asr_world_death1", "cum_rate_64_death1", "cum_rate_74_death1" };
 
             // 指定sheet名
             String[] sheetNames = { "3-2", "4-1", "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9",
@@ -142,7 +113,7 @@ public class ExcelRegex {
                         count += datas.size();
                         // 写入sheet
                         excelWriter.write(datas,
-                                EasyExcelFactory.writerSheet(i, sheetName).head(allNames).build());
+                                EasyExcelFactory.writerSheet(i, sheetName).head(OldData.class).build());
                         // 清除缓存
                         datasListener.clean();
                     }
@@ -160,10 +131,15 @@ public class ExcelRegex {
 
     public static String reFilter(String str, String sheetName) {
         try {
+            // 匹配汉字，去除英文
+            if (!Regex.regex(str, "[\u4e00-\u9fa5]", 0).equals("")) {
+                return Regex.regex(str, "[\u4e00-\u9fa5]+", 0);
+            }
             // 匹配到数字，校验,否则跳过
-            if (Regex.regex(str, "\\d", 0).equals("")) {
+            else if (Regex.regex(str, "\\d", 0).equals("")) {
                 return str;
             }
+
             String newStr = null;
             // 纠正规则
             newStr = str.replaceAll(" ", "");
@@ -174,9 +150,13 @@ public class ExcelRegex {
             newStr = newStr.replaceAll("U", "0");
             newStr = newStr.replaceAll("O", "0");
             newStr = newStr.replaceAll("o", "0");
+            newStr = newStr.replaceAll("D", "0");
+            newStr = newStr.replaceAll("S", "5");
+            newStr = newStr.replaceAll("。", "0");
             newStr = newStr.replaceAll("!", "1");
             newStr = newStr.replaceAll("I", "1");
             newStr = newStr.replaceAll("i", "1");
+            newStr = newStr.replaceAll("】", "1");
             newStr = newStr.replaceAll("\\[", "1");
             newStr = newStr.replaceAll("\\]", "1");
             newStr = newStr.replaceAll(",", ".");
