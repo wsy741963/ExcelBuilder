@@ -134,7 +134,7 @@ public class ExcelRegex {
             str = newStr;
             // 如果还剩余未识别字符，输出log
             if (!Regex.regex(str, "([^\\d\\.\\-~〜\\+])", 0).equals("")) {
-                if (Regex.regex(str, "(^C\\d$|^G\\d$)", 0).equals("")) {
+                if (Regex.regex(str, "(^C\\d+$|^G\\d+$)", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
                 }
                 // 小数点缺失正则匹配自动校对
@@ -150,7 +150,7 @@ public class ExcelRegex {
                 str = fStr;
                 // 匹配无小数点或多小数点的情况
             } else if (Regex.regex(str, "(^\\-?\\d+\\.\\d+$|^\\-?\\d$)", 0).equals("")) {
-                if (str.length() < 6) {
+                if (str.length() < 7) {
                     log.warn("需要手动校对小数点:" + str);
                 }
             }
