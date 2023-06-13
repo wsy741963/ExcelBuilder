@@ -68,27 +68,27 @@ public class CallableExcelBuilder implements Callable<String> {
                               // 判断地区、性别
                               String location = "";
                               String sex = "";
-                              if (Regex.regex(sheet, "(城市)", 0).equals("城市")) {
+                              if (Regex.regex(sheet, "城市", 0).equals("城市")) {
                                     location = "城市";
-                              } else if (Regex.regex(sheet, "(农村)", 0).equals("农村")) {
+                              } else if (Regex.regex(sheet, "农村", 0).equals("农村")) {
                                     location = "农村";
-                              } else if (Regex.regex(sheet, "(全国)", 0).equals("全国")) {
+                              } else if (Regex.regex(sheet, "全国", 0).equals("全国")) {
                                     location = "全国";
                               }
 
-                              if (Regex.regex(sheet, "(东部)", 0).equals("东部")) {
+                              if (Regex.regex(sheet, "东部", 0).equals("东部")) {
                                     location = "东部" + location;
-                              } else if (Regex.regex(sheet, "(中部)", 0).equals("中部")) {
+                              } else if (Regex.regex(sheet, "中部", 0).equals("中部")) {
                                     location = "中部" + location;
-                              } else if (Regex.regex(sheet, "(西部)", 0).equals("西部")) {
+                              } else if (Regex.regex(sheet, "西部", 0).equals("西部")) {
                                     location = "西部" + location;
                               }
 
-                              if (Regex.regex(sheet, "(合计)", 0).equals("合计")) {
+                              if (Regex.regex(sheet, "合计", 0).equals("合计")) {
                                     sex = "合计";
-                              } else if (Regex.regex(sheet, "(男)", 0).equals("男")) {
+                              } else if (Regex.regex(sheet, "男", 0).equals("男")) {
                                     sex = "男";
-                              } else if (Regex.regex(sheet, "(女)", 0).equals("女")) {
+                              } else if (Regex.regex(sheet, "女", 0).equals("女")) {
                                     sex = "女";
                               }
                               log.warn("\n处理了location:" + location + "\tsex:" + sex + "\tage:" + year);

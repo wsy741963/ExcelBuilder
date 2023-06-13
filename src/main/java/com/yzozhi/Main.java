@@ -28,7 +28,7 @@ public class Main {
             Collection<File> fl = FileUtils.listFiles(new File("./"), null, false);
             List<Callable<String>> tasks = new ArrayList<>();
             for (File file : fl) {
-                String fn = Regex.regex(file.getName(), "(^20\\d{2}_regex\\.xlsx?$)", 0);
+                String fn = Regex.regex(file.getName(), "^20\\d{2}_regex\\.xlsx?$", 0);
                 if (!fn.equals("")) {
                     log.warn("发现文件:" + fn);
                     String year = fn.substring(0, 4);
