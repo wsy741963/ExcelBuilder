@@ -1,6 +1,8 @@
 package com.yzozhi;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,6 +19,65 @@ public class ExcelRegex {
         try {
             long start = System.currentTimeMillis();
             Collection<File> fl = FileUtils.listFiles(new File("./"), null, false);
+            // 封装所有表头
+            List<String> names = new ArrayList<>(
+                    Arrays.asList("序号No.", "location_level", "location",
+                            "cover_population", "num_incidence", "num_death", "mv_percent",
+                            "dco_percent,m_i_rate",
+                            "change_for_cr", "接受Accepted"));
+            List<String> names2 = new ArrayList<>(
+                    Arrays.asList("age", "national_total", "national_male", "national_female", "city_total",
+                            "city_male", "city_female", "village_total", "village_male", "village_female",
+                            "east_total", "east_male", "east_female", "central_total", "central_male",
+                            "central_female", "west_total", "west_male", "west_female"));
+            List<String> names3 = new ArrayList<>(
+                    Arrays.asList("cause", "", "num_incidence", "freq_incidence",
+                            "0", "1", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60",
+                            "65",
+                            "70", "75", "80", "85", "rate_crude", "asr_china_incidence",
+                            "asr_world_incidence",
+                            "cum_rate_64_incidence", "cum_rate_74_incidence"));
+            List<String> names4 = new ArrayList<>(
+                    Arrays.asList("cause", "", "num_death", "freq_death", "0", "1", "5", "10", "15", "20",
+                            "25",
+                            "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85",
+                            "rate_crude", "asr_china_death", "asr_world_death", "cum_rate_64_death",
+                            "cum_rate_74_death"));
+            List<String> names5 = new ArrayList<>(
+                    Arrays.asList("cause", "", "num_incidence", "freq_incidence", "rate_crude",
+                            "asr_world_incidence", "cum_rate_64_incidence", "cum_rate_74_incidence",
+                            "num_incidence1", "freq_incidence1", "rate_crude1", "asr_world_incidence1",
+                            "cum_rate_64_incidence1", "cum_rate_74_incidence1"));
+            List<String> names6 = new ArrayList<>(Arrays.asList("cause", "", "num_death", "freq_death",
+                    "rate_crude", "asr_world_death", "cum_rate_64_death", "cum_rate_74_death", "num_death1",
+                    "freq_death1", "rate_crude1", "asr_china_death1", "asr_world_death1",
+                    "cum_rate_64_death1", "cum_rate_74_death1"));
+            // 嵌套封装
+            List<List<String>> allNames = new ArrayList<>();
+            allNames.add(names);
+            allNames.add(names2);
+            for (int j = 0; j < 9; j++) {
+                allNames.add(names3);
+            }
+            for (int j = 0; j < 9; j++) {
+                allNames.add(names4);
+            }
+            for (int j = 0; j < 9; j++) {
+                allNames.add(names5);
+            }
+            for (int j = 0; j < 9; j++) {
+                allNames.add(names6);
+            }
+
+            // 指定sheet名
+            String[] sheetNames = { "3-2", "4-1", "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9",
+                    "1-10",
+                    "1-11", "1-12", "1-13", "1-14", "1-15", "1-16", "1-17", "1-18", "2-1", "2-2", "2-3", "2-4",
+                    "2-5",
+                    "2-6", "2-7", "2-8", "2-9", "2-10", "2-11", "2-12", "2-13", "2-14", "2-15", "2-16", "2-17",
+                    "2-18" };
+
+            // 遍历所有文件
             for (File file : fl) {
                 String fn = Regex.regex(file.getName(), "^20\\d{2}_old\\.xlsx?$", 0);
                 if (!fn.equals("")) {
@@ -32,13 +93,6 @@ public class ExcelRegex {
                         break;
                     }
 
-                    String[] sheetNames = { "3-2", "4-1", "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9",
-                            "1-10",
-                            "1-11", "1-12", "1-13", "1-14", "1-15", "1-16", "1-17", "1-18", "2-1", "2-2", "2-3", "2-4",
-                            "2-5",
-                            "2-6", "2-7", "2-8", "2-9", "2-10", "2-11", "2-12", "2-13", "2-14", "2-15", "2-16", "2-17",
-                            "2-18" };
-
                     // 创建写对象
                     ExcelWriter excelWriter = EasyExcelFactory.write(fileResult).build();
 
@@ -49,44 +103,46 @@ public class ExcelRegex {
                                 .sheet(i)
                                 .doRead();
                         List<OldData> datas = datasListener.getDatas();
-                        log.warn("\n处理表" + sheetNames[i]);
+                        String sheetName = sheetNames[i];
+                        log.warn("\n处理表" + sheetName);
                         for (OldData data : datas) {
                             // 校正原数据
-                            data.setA(reFilter(data.getA()));
-                            data.setB(reFilter(data.getB()));
-                            data.setC(reFilter(data.getC()));
-                            data.setD(reFilter(data.getD()));
-                            data.setE(reFilter(data.getE()));
-                            data.setF(reFilter(data.getF()));
-                            data.setG(reFilter(data.getG()));
-                            data.setH(reFilter(data.getH()));
-                            data.setI(reFilter(data.getI()));
-                            data.setJ(reFilter(data.getJ()));
-                            data.setK(reFilter(data.getK()));
-                            data.setL(reFilter(data.getL()));
-                            data.setM(reFilter(data.getM()));
-                            data.setN(reFilter(data.getN()));
-                            data.setO(reFilter(data.getO()));
-                            data.setP(reFilter(data.getP()));
-                            data.setQ(reFilter(data.getQ()));
-                            data.setR(reFilter(data.getR()));
-                            data.setS(reFilter(data.getS()));
-                            data.setT(reFilter(data.getT()));
-                            data.setU(reFilter(data.getU()));
-                            data.setV(reFilter(data.getV()));
-                            data.setW(reFilter(data.getW()));
-                            data.setX(reFilter(data.getX()));
-                            data.setY(reFilter(data.getY()));
-                            data.setZ(reFilter(data.getZ()));
-                            data.setAa(reFilter(data.getAa()));
-                            data.setAb(reFilter(data.getAb()));
-                            data.setAc(reFilter(data.getAc()));
+                            data.setA(reFilter(data.getA(), sheetName));
+                            data.setB(reFilter(data.getB(), sheetName));
+                            data.setC(reFilter(data.getC(), sheetName));
+                            data.setD(reFilter(data.getD(), sheetName));
+                            data.setE(reFilter(data.getE(), sheetName));
+                            data.setF(reFilter(data.getF(), sheetName));
+                            data.setG(reFilter(data.getG(), sheetName));
+                            data.setH(reFilter(data.getH(), sheetName));
+                            data.setI(reFilter(data.getI(), sheetName));
+                            data.setJ(reFilter(data.getJ(), sheetName));
+                            data.setK(reFilter(data.getK(), sheetName));
+                            data.setL(reFilter(data.getL(), sheetName));
+                            data.setM(reFilter(data.getM(), sheetName));
+                            data.setN(reFilter(data.getN(), sheetName));
+                            data.setO(reFilter(data.getO(), sheetName));
+                            data.setP(reFilter(data.getP(), sheetName));
+                            data.setQ(reFilter(data.getQ(), sheetName));
+                            data.setR(reFilter(data.getR(), sheetName));
+                            data.setS(reFilter(data.getS(), sheetName));
+                            data.setT(reFilter(data.getT(), sheetName));
+                            data.setU(reFilter(data.getU(), sheetName));
+                            data.setV(reFilter(data.getV(), sheetName));
+                            data.setW(reFilter(data.getW(), sheetName));
+                            data.setX(reFilter(data.getX(), sheetName));
+                            data.setY(reFilter(data.getY(), sheetName));
+                            data.setZ(reFilter(data.getZ(), sheetName));
+                            data.setAa(reFilter(data.getAa(), sheetName));
+                            data.setAb(reFilter(data.getAb(), sheetName));
+                            data.setAc(reFilter(data.getAc(), sheetName));
                             count++;
                             log.info("校对了第" + count + "条数据");
                         }
                         count += datas.size();
                         // 写入sheet
-                        excelWriter.write(datas, EasyExcelFactory.writerSheet(i, sheetNames[i]).build());
+                        excelWriter.write(datas,
+                                EasyExcelFactory.writerSheet(i, sheetName).head(allNames).build());
                         // 清除缓存
                         datasListener.clean();
                     }
@@ -102,7 +158,7 @@ public class ExcelRegex {
         }
     }
 
-    public static String reFilter(String str) {
+    public static String reFilter(String str, String sheetName) {
         try {
             // 匹配到数字，校验,否则跳过
             if (Regex.regex(str, "\\d", 0).equals("")) {
@@ -115,6 +171,7 @@ public class ExcelRegex {
             newStr = newStr.replaceAll("\\(", "1");
             newStr = newStr.replaceAll("\\)", "1");
             newStr = newStr.replaceAll("L", "1.");
+            newStr = newStr.replaceAll("U", "0");
             newStr = newStr.replaceAll("O", "0");
             newStr = newStr.replaceAll("o", "0");
             newStr = newStr.replaceAll("!", "1");
