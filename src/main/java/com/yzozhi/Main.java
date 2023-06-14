@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -20,6 +21,16 @@ import lombok.extern.slf4j.Slf4j;
 public class Main {
     public static void main(String[] args) {
         try {
+            System.out.println("\n请选择运行的程序:\n1.数据处理\n2.数据校验\n");
+            Scanner scanner = new Scanner(System.in);
+            int input = scanner.nextInt();
+            scanner.close();
+
+            if (input != 1) {
+                ExcelRegex.excelRegex();
+                return;
+            }
+
             long start = System.currentTimeMillis();
             // 创建线程池
             ExecutorService pool = new ThreadPoolExecutor(5, 8, 6, TimeUnit.SECONDS, new ArrayBlockingQueue<>(5),

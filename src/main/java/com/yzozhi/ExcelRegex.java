@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ExcelRegex {
-    public static void main(String[] args) {
+    public static void excelRegex() {
         try {
             long start = System.currentTimeMillis();
             Collection<File> fl = FileUtils.listFiles(new File("./"), null, false);
@@ -225,7 +225,7 @@ public class ExcelRegex {
                 return newStr;
             } else {
                 // 匹配到数字，校验,否则跳过
-                if (Regex.regex(str, "\\d", 0).equals("")) {
+                if (Regex.regex(str, "^\\-|\\d", 0).equals("")) {
                     log.warn("数字有误 :" + str);
                     return str;
                 }
@@ -250,6 +250,7 @@ public class ExcelRegex {
                 newStr = newStr.replaceAll("I", "1");
                 newStr = newStr.replaceAll("i", "1");
                 newStr = newStr.replaceAll("】", "1");
+                newStr = newStr.replaceAll("l", "1");
                 newStr = newStr.replaceAll("\\[", "1");
                 newStr = newStr.replaceAll("\\]", "1");
                 newStr = newStr.replaceAll(",", ".");
@@ -277,7 +278,7 @@ public class ExcelRegex {
                     log.warn("自动校对小数点:" + str + " -> " + newStr);
                     str = newStr;
                     // 匹配无小数点或多小数点的情况
-                } else if (i == 3 && Regex.regex(str, "^\\-?\\d+\\.\\d+$|^\\-?\\d$", 0).equals("")) {
+                } else if (i == 3 && Regex.regex(str, "^\\-|^\\-?\\d+\\.\\d+$|^\\-?\\d+$", 0).equals("")) {
                     log.warn("需要手动校对小数点:" + str);
                 }
             }
