@@ -94,37 +94,81 @@ public class ExcelRegex {
                         List<OldData> datas = datasListener.getDatas();
                         String sheetName = sheetNames[i];
                         log.warn("\n处理表" + sheetName);
+
                         for (OldData data : datas) {
-                            // 校正原数据
-                            data.setA(reFilter(data.getA(), sheetName));
-                            data.setB(reFilter(data.getB(), sheetName));
-                            data.setC(reFilter(data.getC(), sheetName));
-                            data.setD(reFilter(data.getD(), sheetName));
-                            data.setE(reFilter(data.getE(), sheetName));
-                            data.setF(reFilter(data.getF(), sheetName));
-                            data.setG(reFilter(data.getG(), sheetName));
-                            data.setH(reFilter(data.getH(), sheetName));
-                            data.setI(reFilter(data.getI(), sheetName));
-                            data.setJ(reFilter(data.getJ(), sheetName));
-                            data.setK(reFilter(data.getK(), sheetName));
-                            data.setL(reFilter(data.getL(), sheetName));
-                            data.setM(reFilter(data.getM(), sheetName));
-                            data.setN(reFilter(data.getN(), sheetName));
-                            data.setO(reFilter(data.getO(), sheetName));
-                            data.setP(reFilter(data.getP(), sheetName));
-                            data.setQ(reFilter(data.getQ(), sheetName));
-                            data.setR(reFilter(data.getR(), sheetName));
-                            data.setS(reFilter(data.getS(), sheetName));
-                            data.setT(reFilter(data.getT(), sheetName));
-                            data.setU(reFilter(data.getU(), sheetName));
-                            data.setV(reFilter(data.getV(), sheetName));
-                            data.setW(reFilter(data.getW(), sheetName));
-                            data.setX(reFilter(data.getX(), sheetName));
-                            data.setY(reFilter(data.getY(), sheetName));
-                            data.setZ(reFilter(data.getZ(), sheetName));
-                            data.setAa(reFilter(data.getAa(), sheetName));
-                            data.setAb(reFilter(data.getAb(), sheetName));
-                            data.setAc(reFilter(data.getAc(), sheetName));
+                            // 校正原数据，1校对汉字，2校对整数，3校对浮点
+                            if (i == 0) {
+                                data.setC(reFilter(data.getC(), 1));
+                                data.setD(reFilter(data.getD(), 2));
+                                data.setE(reFilter(data.getE(), 2));
+                                data.setF(reFilter(data.getF(), 2));
+                                data.setG(reFilter(data.getG(), 3));
+                                data.setH(reFilter(data.getH(), 3));
+                                data.setI(reFilter(data.getI(), 3));
+                                data.setJ(reFilter(data.getJ(), 3));
+                            } else if (i == 1) {
+                                data.setB(reFilter(data.getB(), 2));
+                                data.setC(reFilter(data.getC(), 2));
+                                data.setD(reFilter(data.getD(), 2));
+                                data.setE(reFilter(data.getE(), 2));
+                                data.setF(reFilter(data.getF(), 2));
+                                data.setG(reFilter(data.getG(), 2));
+                                data.setH(reFilter(data.getH(), 2));
+                                data.setI(reFilter(data.getI(), 2));
+                                data.setJ(reFilter(data.getJ(), 2));
+                                data.setK(reFilter(data.getK(), 2));
+                                data.setL(reFilter(data.getL(), 2));
+                                data.setM(reFilter(data.getM(), 2));
+                                data.setN(reFilter(data.getN(), 2));
+                                data.setO(reFilter(data.getO(), 2));
+                                data.setP(reFilter(data.getP(), 2));
+                                data.setQ(reFilter(data.getQ(), 2));
+                                data.setR(reFilter(data.getR(), 2));
+                                data.setS(reFilter(data.getS(), 2));
+                            } else if (i > 1 && i < 20) {
+                                data.setA(reFilter(data.getA(), 1));
+                                data.setC(reFilter(data.getC(), 2));
+                                data.setD(reFilter(data.getD(), 3));
+                                data.setE(reFilter(data.getE(), 3));
+                                data.setF(reFilter(data.getF(), 3));
+                                data.setG(reFilter(data.getG(), 3));
+                                data.setH(reFilter(data.getH(), 3));
+                                data.setI(reFilter(data.getI(), 3));
+                                data.setJ(reFilter(data.getJ(), 3));
+                                data.setK(reFilter(data.getK(), 3));
+                                data.setL(reFilter(data.getL(), 3));
+                                data.setM(reFilter(data.getM(), 3));
+                                data.setN(reFilter(data.getN(), 3));
+                                data.setO(reFilter(data.getO(), 3));
+                                data.setP(reFilter(data.getP(), 3));
+                                data.setQ(reFilter(data.getQ(), 3));
+                                data.setR(reFilter(data.getR(), 3));
+                                data.setS(reFilter(data.getS(), 3));
+                                data.setT(reFilter(data.getT(), 3));
+                                data.setU(reFilter(data.getU(), 3));
+                                data.setV(reFilter(data.getV(), 3));
+                                data.setW(reFilter(data.getW(), 3));
+                                data.setX(reFilter(data.getX(), 3));
+                                data.setY(reFilter(data.getY(), 3));
+                                data.setZ(reFilter(data.getZ(), 3));
+                                data.setAa(reFilter(data.getAa(), 3));
+                                data.setAb(reFilter(data.getAb(), 3));
+                            } else if (i > 19 && i < 38) {
+                                data.setA(reFilter(data.getA(), 1));
+                                data.setC(reFilter(data.getC(), 2));
+                                data.setI(reFilter(data.getI(), 2));
+                                data.setD(reFilter(data.getD(), 3));
+                                data.setE(reFilter(data.getE(), 3));
+                                data.setF(reFilter(data.getF(), 3));
+                                data.setG(reFilter(data.getG(), 3));
+                                data.setH(reFilter(data.getH(), 3));
+                                data.setJ(reFilter(data.getJ(), 3));
+                                data.setK(reFilter(data.getK(), 3));
+                                data.setL(reFilter(data.getL(), 3));
+                                data.setM(reFilter(data.getM(), 3));
+                                data.setN(reFilter(data.getN(), 3));
+                            }
+
                             count++;
                             log.info("校对了第" + count + "条数据");
                         }
@@ -168,71 +212,74 @@ public class ExcelRegex {
         }
     }
 
-    public static String reFilter(String str, String sheetName) {
+    public static String reFilter(String str, int i) {
         try {
             // 匹配汉字，去除英文
-            if (!Regex.regex(str, "[\u4e00-\u9fa5]", 0).equals("")) {
-                return Regex.regex(str, "[\u4e00-\u9fa5]+", 0);
-            }
-            // 匹配到数字，校验,否则跳过
-            else if (Regex.regex(str, "\\d", 0).equals("")) {
-                return str;
-            }
-
             String newStr = null;
-            // 纠正规则
-            newStr = str.replaceAll(" ", "");
-            newStr = newStr.replaceAll("\\(\\)", "0");
-            newStr = newStr.replaceAll("\\(", "1");
-            newStr = newStr.replaceAll("\\)", "1");
-            newStr = newStr.replaceAll("L", "1.");
-            newStr = newStr.replaceAll("U", "0");
-            newStr = newStr.replaceAll("O", "0");
-            newStr = newStr.replaceAll("o", "0");
-            newStr = newStr.replaceAll("D", "0");
-            newStr = newStr.replaceAll("S", "5");
-            newStr = newStr.replaceAll("n", "0");
-            newStr = newStr.replaceAll("c", "0");
-            newStr = newStr.replaceAll("C", "0");
-            newStr = newStr.replaceAll("z", "2");
-            newStr = newStr.replaceAll("g", "9");
-            newStr = newStr.replaceAll("G", "0.");
-            newStr = newStr.replaceAll("!", "1");
-            newStr = newStr.replaceAll("I", "1");
-            newStr = newStr.replaceAll("i", "1");
-            newStr = newStr.replaceAll("】", "1");
-            newStr = newStr.replaceAll("\\[", "1");
-            newStr = newStr.replaceAll("\\]", "1");
-            newStr = newStr.replaceAll(",", ".");
-            newStr = newStr.replaceAll("、", ".");
-            newStr = newStr.replaceAll("J", "1");
-            newStr = newStr.replaceAll("Q", "0.");
-            newStr = newStr.replaceAll("q", "9");
+            if (i == 1) {
+                newStr = Regex.regex(str, "[\u4e00-\u9fa5]+", 0);
+                if (newStr.equals("")) {
+                    log.warn("汉字有误：" + str);
+                    return str;
+                }
+                return newStr;
+            } else {
+                // 匹配到数字，校验,否则跳过
+                if (Regex.regex(str, "\\d", 0).equals("")) {
+                    log.warn("数字有误 :" + str);
+                    return str;
+                }
+                // 纠正数字规则
+                newStr = str.replaceAll(" ", "");
+                newStr = newStr.replaceAll("\\(\\)", "0");
+                newStr = newStr.replaceAll("\\(", "1");
+                newStr = newStr.replaceAll("\\)", "1");
+                newStr = newStr.replaceAll("L", "1.");
+                newStr = newStr.replaceAll("U", "0");
+                newStr = newStr.replaceAll("O", "0");
+                newStr = newStr.replaceAll("o", "0");
+                newStr = newStr.replaceAll("D", "0");
+                newStr = newStr.replaceAll("S", "5");
+                newStr = newStr.replaceAll("n", "0");
+                newStr = newStr.replaceAll("c", "0");
+                newStr = newStr.replaceAll("C", "0");
+                newStr = newStr.replaceAll("z", "2");
+                newStr = newStr.replaceAll("g", "9");
+                newStr = newStr.replaceAll("G", "0.");
+                newStr = newStr.replaceAll("!", "1");
+                newStr = newStr.replaceAll("I", "1");
+                newStr = newStr.replaceAll("i", "1");
+                newStr = newStr.replaceAll("】", "1");
+                newStr = newStr.replaceAll("\\[", "1");
+                newStr = newStr.replaceAll("\\]", "1");
+                newStr = newStr.replaceAll(",", ".");
+                newStr = newStr.replaceAll("、", ".");
+                newStr = newStr.replaceAll("J", "1");
+                newStr = newStr.replaceAll("Q", "0.");
+                newStr = newStr.replaceAll("q", "9");
 
-            // 输出纠正记录到日志
-            if (!newStr.equals(str)) {
-                log.info("自动校对:" + str + " -> " + newStr);
-            }
-            str = newStr;
-            // 如果还剩余未识别字符，输出log
-            if (!Regex.regex(str, "[^\\d\\.\\-~〜\\+]", 0).equals("")) {
-                if (Regex.regex(str, "^C\\d+$|^G\\d+$", 0).equals("")) {
+                // 输出纠正记录到日志
+                if (!newStr.equals(str)) {
+                    log.info("自动校对:" + str + " -> " + newStr);
+                }
+                str = newStr;
+
+                // 如果还剩余未识别字符，输出log
+                if (!Regex.regex(str, "[^\\d\\.\\-~〜\\+]", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
+                    // 小数点缺失正则匹配自动校对
+                } else if (!Regex.regex(str, "^-?0\\d+$", 0).equals("")) {
+                    if (!str.substring(0, 1).equals("-")) {
+                        newStr = str.substring(0, 1) + "." + str.substring(1);
+                    } else {
+                        newStr = str.substring(0, 2) + "." + str.substring(2);
+                    }
+                    log.warn("自动校对小数点:" + str + " -> " + newStr);
+                    str = newStr;
+                    // 匹配无小数点或多小数点的情况
+                } else if (i == 3 && Regex.regex(str, "^\\-?\\d+\\.\\d+$|^\\-?\\d$", 0).equals("")) {
+                    log.warn("需要手动校对小数点:" + str);
                 }
-                // 小数点缺失正则匹配自动校对
-            } else if (!Regex.regex(str, "^-?0\\d+$", 0).equals("")) {
-                String fStr = null;
-                if (!str.substring(0, 1).equals("-")) {
-                    fStr = str.substring(0, 1) + "." + str.substring(1);
-                    log.warn("自动校对小数点:" + str + " -> " + fStr);
-                } else {
-                    fStr = str.substring(0, 2) + "." + str.substring(2);
-                    log.warn("自动校对小数点:" + str + " -> " + fStr);
-                }
-                str = fStr;
-                // 匹配无小数点或多小数点的情况
-            } else if (Regex.regex(str, "^\\-?\\d+\\.\\d+$|^\\-?\\d$", 0).equals("")) {
-                log.warn("需要手动校对小数点:" + str);
             }
             return str;
         } catch (Exception e) {
