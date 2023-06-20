@@ -53,8 +53,7 @@ public class ExcelRegex {
             String[] names6 = { "cause", "", "num_death", "freq_death", "rate_crude",
                     "asr_world_death",
                     "cum_rate_64_death", "cum_rate_74_death", "num_death1", "freq_death1",
-                    "rate_crude1",
-                    "asr_china_death1", "asr_world_death1", "cum_rate_64_death1",
+                    "rate_crude1", "asr_world_death1", "cum_rate_64_death1",
                     "cum_rate_74_death1" };
             List<List<String>> lists6 = listBuilder(names6);
 
