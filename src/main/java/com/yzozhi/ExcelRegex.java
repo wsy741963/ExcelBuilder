@@ -216,6 +216,7 @@ public class ExcelRegex {
         try {
             // 跳过空
             if (str == null) {
+                log.warn("注意!空字符串");
                 return str;
             }
             // 匹配汉字，去除英文
