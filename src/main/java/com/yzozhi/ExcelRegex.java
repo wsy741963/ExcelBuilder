@@ -214,6 +214,10 @@ public class ExcelRegex {
 
     public static String reFilter(String str, int i) {
         try {
+            // 跳过空
+            if (str == null) {
+                return str;
+            }
             // 匹配汉字，去除英文
             String newStr = null;
             if (i == 1) {
@@ -224,11 +228,6 @@ public class ExcelRegex {
                 }
                 return newStr;
             } else {
-                // 匹配到数字，校验,否则跳过
-                if (Regex.regex(str, "^\\-$|^\\-?\\d", 0).equals("")) {
-                    log.warn("数字有误 :" + str);
-                    return str;
-                }
                 // 纠正数字规则
                 newStr = str.replaceAll(" ", "");
                 newStr = newStr.replaceAll("\\(\\)", "0");
@@ -268,11 +267,14 @@ public class ExcelRegex {
                 }
                 str = newStr;
 
-                // 如果还剩余未识别字符，输出log
-                if (!Regex.regex(str, "[^\\d\\.\\-~〜\\+]", 0).equals("")) {
+                // 匹配到非数字跳过
+                if (Regex.regex(str, "^\\-$|^\\-?\\d", 0).equals("")) {
+                    log.warn("数字有误 :" + str);
+                    // 如果还剩余未识别字符，输出log
+                } else if (!Regex.regex(str, "[^\\d\\.\\-~〜\\+]", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
                     // 小数点缺失正则匹配自动校对
-                } else if (i == 3 && !Regex.regex(str, "^-?\\d{2,}$", 0).equals("")) {
+                } else if (i == 3 && !Regex.regex(str, "^-?\\d{3,}$", 0).equals("")) {
                     newStr = str.substring(0, str.length() - 2) + "." + str.substring(str.length() - 2);
                     log.warn("自动校对小数点:" + str + " -> " + newStr);
                     str = newStr;
