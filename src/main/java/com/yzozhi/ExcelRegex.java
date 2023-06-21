@@ -240,6 +240,7 @@ public class ExcelRegex {
                 newStr = newStr.replaceAll("o", "0");
                 newStr = newStr.replaceAll("D", "0");
                 newStr = newStr.replaceAll("S", "5");
+                newStr = newStr.replaceAll("a", "0.");
                 newStr = newStr.replaceAll("n", "0");
                 newStr = newStr.replaceAll("c", "0");
                 newStr = newStr.replaceAll("C", "0");
