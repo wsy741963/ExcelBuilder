@@ -92,7 +92,7 @@ public class ExcelRegex {
                                 .doRead();
                         List<OldData> datas = datasListener.getDatas();
                         String sheetName = sheetNames[i];
-                        log.warn("\n处理表" + sheetName);
+                        log.warn("\n================================\n处理表:" + sheetName+"\n================================");
 
                         for (OldData data : datas) {
                             // 校正原数据，1校对汉字，2校对整数，3校对浮点
@@ -216,7 +216,7 @@ public class ExcelRegex {
             // 匹配汉字，去除英文
             String newStr = null;
             if (i == 1) {
-                newStr = Regex.regex(str, "[\u4e00-\u9fa5]+", 0);
+                newStr = Regex.regex(str, "[\u4e00-\u9fa5]+\\,?[\u4e00-\u9fa5]*", 0);
                 if (newStr.equals("")) {
                     log.warn("汉字有误：" + str);
                     return str;
@@ -257,6 +257,9 @@ public class ExcelRegex {
                 newStr = newStr.replaceAll("J", "1");
                 newStr = newStr.replaceAll("Q", "0.");
                 newStr = newStr.replaceAll("q", "9");
+                newStr = newStr.replaceAll("^OJO", "0.10");
+                newStr = newStr.replaceAll("«", "8");
+                newStr = newStr.replaceAll("1X1", "00");
 
                 // 输出纠正记录到日志
                 if (!newStr.equals(str)) {
@@ -277,7 +280,7 @@ public class ExcelRegex {
                     log.warn("自动校对小数点:" + str + " -> " + newStr);
                     str = newStr;
                     // 匹配无小数点或多小数点的情况
-                } else if (i == 3 && Regex.regex(str, "^\\-|^\\-?\\d+\\.\\d+$|^\\-?\\d+$", 0).equals("")) {
+                } else if (i == 3 && Regex.regex(str, "^\\-$|^\\-?\\d+\\.\\d+$|^\\-?\\d+$", 0).equals("")) {
                     log.warn("需要手动校对小数点:" + str);
                 }
             }
