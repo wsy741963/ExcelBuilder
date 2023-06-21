@@ -280,7 +280,7 @@ public class ExcelRegex {
                     log.warn("自动校对小数点:" + str + " -> " + newStr);
                     str = newStr;
                     // 匹配无小数点或多小数点的情况
-                } else if (i == 3 && Regex.regex(str, "^\\-$|^\\-?\\d+\\.\\d+$|^\\-?\\d+$", 0).equals("")) {
+                } else if (i == 3 && Regex.regex(str, "^\\-$|^\\-?\\d+\\.\\d+$", 0).equals("")) {
                     log.warn("需要手动校对小数点:" + str);
                 }
             }
