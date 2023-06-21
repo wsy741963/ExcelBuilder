@@ -92,7 +92,8 @@ public class ExcelRegex {
                                 .doRead();
                         List<OldData> datas = datasListener.getDatas();
                         String sheetName = sheetNames[i];
-                        log.warn("\n================================\n处理表:" + sheetName+"\n================================");
+                        log.warn("\n================================\n处理表:" + sheetName
+                                + "\n================================");
 
                         for (OldData data : datas) {
                             // 校正原数据，1校对汉字，2校对整数，3校对浮点
@@ -224,7 +225,7 @@ public class ExcelRegex {
                 return newStr;
             } else {
                 // 匹配到数字，校验,否则跳过
-                if (Regex.regex(str, "^\\-|\\d", 0).equals("")) {
+                if (Regex.regex(str, "^\\-$|^\\-?\\d", 0).equals("")) {
                     log.warn("数字有误 :" + str);
                     return str;
                 }
@@ -271,16 +272,12 @@ public class ExcelRegex {
                 if (!Regex.regex(str, "[^\\d\\.\\-~〜\\+]", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
                     // 小数点缺失正则匹配自动校对
-                } else if (!Regex.regex(str, "^-?0\\d+$", 0).equals("")) {
-                    if (!str.substring(0, 1).equals("-")) {
-                        newStr = str.substring(0, 1) + "." + str.substring(1);
-                    } else {
-                        newStr = str.substring(0, 2) + "." + str.substring(2);
-                    }
+                } else if (i == 3 && !Regex.regex(str, "^-?\\d{2,}$", 0).equals("")) {
+                    newStr = str.substring(0, str.length() - 2) + "." + str.substring(str.length() - 2);
                     log.warn("自动校对小数点:" + str + " -> " + newStr);
                     str = newStr;
-                    // 匹配无小数点或多小数点的情况
-                } else if (i == 3 && Regex.regex(str, "^\\-$|^\\-?\\d+\\.\\d+$", 0).equals("")) {
+                    // 多小数点的情况
+                } else if (i == 3 && Regex.regex(str, "^\\-$|^\\d$|^\\-?\\d+\\.\\d+$", 0).equals("")) {
                     log.warn("需要手动校对小数点:" + str);
                 }
             }
