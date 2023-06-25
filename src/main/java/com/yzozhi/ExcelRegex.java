@@ -222,7 +222,7 @@ public class ExcelRegex {
             // 匹配汉字，去除英文
             String newStr = null;
             if (i == 1) {
-                newStr = Regex.regex(str, "[\u4e00-\u9fa5]+\\,?[\u4e00-\u9fa5]*", 0);
+                newStr = Regex.regex(str, "[\u4e00-\u9fa5\\,]+", 0);
                 if (newStr.equals("")) {
                     log.warn("汉字有误：" + str);
                     return str;
@@ -269,14 +269,14 @@ public class ExcelRegex {
                 }
                 str = newStr;
 
-                // 纠正横杠为小数点
-                if (!Regex.regex(str, "^\\d+\\-\\d+$", 0).equals("")) {
+                // 识别数字以外字符
+                if (!Regex.regex(str, "[^\\d\\.\\-]", 0).equals("")) {
+                    log.warn("需要手动校对:" + str);
+                    // 纠正横杠为小数点
+                } else if (!Regex.regex(str, "^\\d+\\-\\d+$", 0).equals("")) {
                     newStr = str.replaceAll("-", ".");
                     log.warn("自动校对:" + str + " -> " + newStr);
                     str = newStr;
-                } else if (!Regex.regex(str, "[^\\d\\.\\-]", 0).equals("")) {
-                    // 识别数字以外字符
-                    log.warn("需要手动校对:" + str);
                     // 小数点缺失正则匹配自动校对
                 } else if (i == 3 && !Regex.regex(str, "^-?\\d{3,}$", 0).equals("")) {
                     newStr = str.substring(0, str.length() - 2) + "." + str.substring(str.length() - 2);
@@ -285,6 +285,9 @@ public class ExcelRegex {
                     // 多小数点的情况
                 } else if (i == 3 && Regex.regex(str, "^\\-$|^\\d$|^\\-?\\d+\\.\\d+$", 0).equals("")) {
                     log.warn("需要手动校对小数点:" + str);
+                    // 错误识别括号
+                } else if (i == 3 && Regex.regex(str, "^\\d+\\.0$", 0).equals("")) {
+                    log.warn("需要手动校对:" + str);
                 }
             }
             return str;
