@@ -269,11 +269,13 @@ public class ExcelRegex {
                 }
                 str = newStr;
 
-                // 匹配到非数字跳过
-                if (Regex.regex(str, "^\\-$|^\\-?\\d", 0).equals("")) {
-                    log.warn("数字有误 :" + str);
-                    // 如果还剩余未识别字符，输出log
-                } else if (!Regex.regex(str, "[^\\d\\.\\-~〜\\+]", 0).equals("")) {
+                // 纠正横杠为小数点
+                if (!Regex.regex(str, "^\\d+\\-\\d+$", 0).equals("")) {
+                    newStr = str.replaceAll("-", ".");
+                    log.warn("自动校对:" + str + " -> " + newStr);
+                    str = newStr;
+                } else if (!Regex.regex(str, "[^\\d\\.\\-]", 0).equals("")) {
+                    // 识别数字以外字符
                     log.warn("需要手动校对:" + str);
                     // 小数点缺失正则匹配自动校对
                 } else if (i == 3 && !Regex.regex(str, "^-?\\d{3,}$", 0).equals("")) {
