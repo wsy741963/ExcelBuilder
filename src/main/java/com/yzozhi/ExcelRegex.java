@@ -258,6 +258,7 @@ public class ExcelRegex {
                 newStr = newStr.replaceAll("\\]", "1");
                 newStr = newStr.replaceAll(",", ".");
                 newStr = newStr.replaceAll("、", ".");
+                newStr = newStr.replaceAll(":", ".");
                 newStr = newStr.replaceAll("J", "1");
                 newStr = newStr.replaceAll("Q", "0.");
                 newStr = newStr.replaceAll("q", "9");
