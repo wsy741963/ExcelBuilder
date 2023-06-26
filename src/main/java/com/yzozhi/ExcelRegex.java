@@ -245,6 +245,7 @@ public class ExcelRegex {
                 newStr = newStr.replaceAll("c", "0");
                 newStr = newStr.replaceAll("C", "0");
                 newStr = newStr.replaceAll("z", "2");
+                newStr = newStr.replaceAll("Z", "2.");
                 newStr = newStr.replaceAll("g", "9");
                 newStr = newStr.replaceAll("G", "0.");
                 newStr = newStr.replaceAll("!", "1");
@@ -265,7 +266,7 @@ public class ExcelRegex {
 
                 // 输出纠正记录到日志
                 if (!newStr.equals(str)) {
-                    log.info("自动校对:" + str + " -> " + newStr);
+                    log.warn("自动校对字符:" + str + " -> " + newStr);
                 }
                 str = newStr;
 
