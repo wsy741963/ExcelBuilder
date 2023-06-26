@@ -286,8 +286,8 @@ public class ExcelRegex {
                 } else if (i == 3 && Regex.regex(str, "^\\-$|^\\d$|^\\-?\\d+\\.\\d+$", 0).equals("")) {
                     log.warn("需要手动校对小数点:" + str);
                     // 错误识别括号
-                } else if (i == 3 && Regex.regex(str, "^\\d+\\.0$", 0).equals("")) {
-                    log.warn("需要手动校对:" + str);
+                } else if (i == 3 && !Regex.regex(str, "^\\d+\\.0$", 0).equals("")) {
+                    log.warn("需要手动校对括号:" + str);
                 }
             }
             return str;
