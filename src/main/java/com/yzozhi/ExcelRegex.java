@@ -236,6 +236,7 @@ public class ExcelRegex {
                 newStr = newStr.replaceAll("\\)", "1");
                 newStr = newStr.replaceAll("L", "1.");
                 newStr = newStr.replaceAll("U", "0");
+                newStr = newStr.replaceAll("H", "11");
                 newStr = newStr.replaceAll("O", "0");
                 newStr = newStr.replaceAll("o", "0");
                 newStr = newStr.replaceAll("D", "0");
