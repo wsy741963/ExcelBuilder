@@ -19,8 +19,12 @@ public class DatasBuilder {
                     "city_female", "village_total", "village_male", "village_female", "east_total", "east_male",
                     "east_female", "central_total", "central_male", "central_female", "west_total", "west_male",
                     "west_female" };
+            // 新建计数
             int count = 0;
             int count1 = 0;
+            // 获取真实年份
+            year = String.valueOf(Integer.parseInt(year) - 3);
+
             // 数据遍历重构
             for (Data data : datas) {
                 if (data.getChangeForCr() != null) {

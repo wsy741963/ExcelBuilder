@@ -70,10 +70,10 @@ public class ExcelRegex {
                 String fn = Regex.regex(file.getName(), "^20\\d{2}_old\\.xlsx?$", 0);
                 if (!fn.equals("")) {
                     log.warn("发现文件:" + fn);
-                    String year = fn.substring(0, 4);
 
                     // 定义文件
-                    String fileRead = year + "_old.xlsx";
+                    String fileRead = fn;
+                    String year = fn.substring(0, 4);
                     String fileResult = year + "_regex.xlsx";
 
                     if (FileUtils.getFile(fileResult).exists()) {
