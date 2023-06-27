@@ -264,6 +264,7 @@ public class ExcelRegex {
                 newStr = newStr.replaceAll("q", "9");
                 newStr = newStr.replaceAll("^OJO", "0.10");
                 newStr = newStr.replaceAll("«", "8");
+                newStr = newStr.replaceAll("^", ".2");
                 newStr = newStr.replaceAll("\\（x\\）", "00");
                 newStr = newStr.replaceAll("1X1", "00");
 
