@@ -265,7 +265,7 @@ public class ExcelRegex {
                 newStr = newStr.replaceAll("^OJO", "0.10");
                 newStr = newStr.replaceAll("«", "8");
                 newStr = newStr.replaceAll("»", "8");
-                newStr = newStr.replaceAll("^", ".2");
+                newStr = newStr.replaceAll("\\^", ".2");
                 newStr = newStr.replaceAll("\\（x\\）", "00");
                 newStr = newStr.replaceAll("1X1", "00");
 
@@ -278,8 +278,14 @@ public class ExcelRegex {
                 // 识别数字以外字符
                 if (!Regex.regex(str, "[^\\d\\.\\-]", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
+                    // 多余小数点
+                } else if (i == 2 && !Regex.regex(str, "\\.", 0).equals("")) {
+                    log.warn("数量不应该有小数点:" + str);
+                    // 首位为0的情况
+                } else if (i == 2 && !Regex.regex(str, "^0\\d+$", 0).equals("")) {
+                    log.warn("需要手动校对:" + str);
                     // 纠正横杠为小数点
-                } else if (!Regex.regex(str, "^\\d+\\-\\d+$", 0).equals("")) {
+                } else if (i == 3 && !Regex.regex(str, "^\\-?\\d+\\-\\d+$", 0).equals("")) {
                     newStr = str.replaceAll("-", ".");
                     log.warn("自动校对:" + str + " -> " + newStr);
                     str = newStr;
@@ -294,6 +300,9 @@ public class ExcelRegex {
                     // 错误识别括号
                 } else if (i == 3 && !Regex.regex(str, "^\\d+\\.0$", 0).equals("")) {
                     log.warn("需要手动校对括号:" + str);
+                    // 首位为0的情况
+                } else if (i == 3 && !Regex.regex(str, "^\\-?0\\d+\\.\\d+$", 0).equals("")) {
+                    log.warn("需要手动校对:" + str);
                 }
             }
             return str;
