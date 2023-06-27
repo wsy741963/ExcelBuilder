@@ -222,7 +222,7 @@ public class ExcelRegex {
             // 匹配汉字，去除英文
             String newStr = null;
             if (i == 1) {
-                newStr = Regex.regex(str, "[\u4e00-\u9fa5\\,]+", 0);
+                newStr = Regex.regex(str, "[\u4e00-\u9fa5\\,，]+", 0);
                 if (newStr.equals("")) {
                     log.warn("汉字有误：" + str);
                     return str;
@@ -264,6 +264,7 @@ public class ExcelRegex {
                 newStr = newStr.replaceAll("q", "9");
                 newStr = newStr.replaceAll("^OJO", "0.10");
                 newStr = newStr.replaceAll("«", "8");
+                newStr = newStr.replaceAll("»", "8");
                 newStr = newStr.replaceAll("^", ".2");
                 newStr = newStr.replaceAll("\\（x\\）", "00");
                 newStr = newStr.replaceAll("1X1", "00");
