@@ -294,12 +294,9 @@ public class ExcelRegex {
                     newStr = str.substring(0, str.length() - 2) + "." + str.substring(str.length() - 2);
                     log.warn("自动校对小数点:" + str + " -> " + newStr);
                     str = newStr;
-                    // 多小数点的情况
-                } else if (i == 3 && Regex.regex(str, "^\\-$|^\\d$|^\\-?\\d+\\.\\d+$", 0).equals("")) {
+                    // 小数点问题的情况
+                } else if (i == 3 && Regex.regex(str, "^\\-$|^\\d$|^\\-?\\d+\\.\\d{2}$", 0).equals("")) {
                     log.warn("需要手动校对小数点:" + str);
-                    // 错误识别括号
-                } else if (i == 3 && !Regex.regex(str, "^\\d+\\.0$", 0).equals("")) {
-                    log.warn("需要手动校对括号:" + str);
                     // 首位为0的情况
                 } else if (i == 3 && !Regex.regex(str, "^\\-?0\\d+\\.\\d+$", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
