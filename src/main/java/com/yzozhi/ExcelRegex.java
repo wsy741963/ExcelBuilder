@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ExcelRegex {
-    public static void excelRegex() {
+    public static void excelRegex(int input) {
         try {
             long start = System.currentTimeMillis();
             Collection<File> fl = FileUtils.listFiles(new File("./"), null, false);
@@ -64,6 +64,11 @@ public class ExcelRegex {
                     "2-5",
                     "2-6", "2-7", "2-8", "2-9", "2-10", "2-11", "2-12", "2-13", "2-14", "2-15", "2-16", "2-17",
                     "2-18" };
+            // 校对参数
+            int j = 3;
+            if (input == 3) {
+                j = 4;
+            }
 
             // 遍历所有文件
             for (File file : fl) {
@@ -83,7 +88,7 @@ public class ExcelRegex {
 
                     // 创建写对象
                     ExcelWriter excelWriter = EasyExcelFactory.write(fileResult).build();
-
+                    // 计数
                     int count = 0;
                     for (int i = 0; i < sheetNames.length; i++) {
                         OldDataListener datasListener = new OldDataListener();
@@ -94,18 +99,17 @@ public class ExcelRegex {
                         String sheetName = sheetNames[i];
                         log.warn("\n================================\n处理表:" + sheetName
                                 + "\n================================");
-
                         for (OldData data : datas) {
-                            // 校正原数据，1校对汉字，2校对整数，3校对浮点
+                            // 校正原数据，1校对汉字，2校对整数，3校对浮点，4补全小数
                             if (i == 0) {
                                 data.setC(reFilter(data.getC(), 1));
                                 data.setD(reFilter(data.getD(), 2));
                                 data.setE(reFilter(data.getE(), 2));
                                 data.setF(reFilter(data.getF(), 2));
-                                data.setG(reFilter(data.getG(), 3));
-                                data.setH(reFilter(data.getH(), 3));
-                                data.setI(reFilter(data.getI(), 3));
-                                data.setJ(reFilter(data.getJ(), 3));
+                                data.setG(reFilter(data.getG(), j));
+                                data.setH(reFilter(data.getH(), j));
+                                data.setI(reFilter(data.getI(), j));
+                                data.setJ(reFilter(data.getJ(), j));
                             } else if (i == 1) {
                                 data.setB(reFilter(data.getB(), 2));
                                 data.setC(reFilter(data.getC(), 2));
@@ -128,45 +132,45 @@ public class ExcelRegex {
                             } else if (i > 1 && i < 20) {
                                 data.setA(reFilter(data.getA(), 1));
                                 data.setC(reFilter(data.getC(), 2));
-                                data.setD(reFilter(data.getD(), 3));
-                                data.setE(reFilter(data.getE(), 3));
-                                data.setF(reFilter(data.getF(), 3));
-                                data.setG(reFilter(data.getG(), 3));
-                                data.setH(reFilter(data.getH(), 3));
-                                data.setI(reFilter(data.getI(), 3));
-                                data.setJ(reFilter(data.getJ(), 3));
-                                data.setK(reFilter(data.getK(), 3));
-                                data.setL(reFilter(data.getL(), 3));
-                                data.setM(reFilter(data.getM(), 3));
-                                data.setN(reFilter(data.getN(), 3));
-                                data.setO(reFilter(data.getO(), 3));
-                                data.setP(reFilter(data.getP(), 3));
-                                data.setQ(reFilter(data.getQ(), 3));
-                                data.setR(reFilter(data.getR(), 3));
-                                data.setS(reFilter(data.getS(), 3));
-                                data.setT(reFilter(data.getT(), 3));
-                                data.setU(reFilter(data.getU(), 3));
-                                data.setV(reFilter(data.getV(), 3));
-                                data.setW(reFilter(data.getW(), 3));
-                                data.setX(reFilter(data.getX(), 3));
-                                data.setY(reFilter(data.getY(), 3));
-                                data.setZ(reFilter(data.getZ(), 3));
-                                data.setAa(reFilter(data.getAa(), 3));
-                                data.setAb(reFilter(data.getAb(), 3));
+                                data.setD(reFilter(data.getD(), j));
+                                data.setE(reFilter(data.getE(), j));
+                                data.setF(reFilter(data.getF(), j));
+                                data.setG(reFilter(data.getG(), j));
+                                data.setH(reFilter(data.getH(), j));
+                                data.setI(reFilter(data.getI(), j));
+                                data.setJ(reFilter(data.getJ(), j));
+                                data.setK(reFilter(data.getK(), j));
+                                data.setL(reFilter(data.getL(), j));
+                                data.setM(reFilter(data.getM(), j));
+                                data.setN(reFilter(data.getN(), j));
+                                data.setO(reFilter(data.getO(), j));
+                                data.setP(reFilter(data.getP(), j));
+                                data.setQ(reFilter(data.getQ(), j));
+                                data.setR(reFilter(data.getR(), j));
+                                data.setS(reFilter(data.getS(), j));
+                                data.setT(reFilter(data.getT(), j));
+                                data.setU(reFilter(data.getU(), j));
+                                data.setV(reFilter(data.getV(), j));
+                                data.setW(reFilter(data.getW(), j));
+                                data.setX(reFilter(data.getX(), j));
+                                data.setY(reFilter(data.getY(), j));
+                                data.setZ(reFilter(data.getZ(), j));
+                                data.setAa(reFilter(data.getAa(), j));
+                                data.setAb(reFilter(data.getAb(), j));
                             } else if (i > 19 && i < 38) {
                                 data.setA(reFilter(data.getA(), 1));
                                 data.setC(reFilter(data.getC(), 2));
                                 data.setI(reFilter(data.getI(), 2));
-                                data.setD(reFilter(data.getD(), 3));
-                                data.setE(reFilter(data.getE(), 3));
-                                data.setF(reFilter(data.getF(), 3));
-                                data.setG(reFilter(data.getG(), 3));
-                                data.setH(reFilter(data.getH(), 3));
-                                data.setJ(reFilter(data.getJ(), 3));
-                                data.setK(reFilter(data.getK(), 3));
-                                data.setL(reFilter(data.getL(), 3));
-                                data.setM(reFilter(data.getM(), 3));
-                                data.setN(reFilter(data.getN(), 3));
+                                data.setD(reFilter(data.getD(), j));
+                                data.setE(reFilter(data.getE(), j));
+                                data.setF(reFilter(data.getF(), j));
+                                data.setG(reFilter(data.getG(), j));
+                                data.setH(reFilter(data.getH(), j));
+                                data.setJ(reFilter(data.getJ(), j));
+                                data.setK(reFilter(data.getK(), j));
+                                data.setL(reFilter(data.getL(), j));
+                                data.setM(reFilter(data.getM(), j));
+                                data.setN(reFilter(data.getN(), j));
                             }
 
                             count++;
@@ -212,7 +216,7 @@ public class ExcelRegex {
         }
     }
 
-    public static String reFilter(String str, int i) {
+    public static String reFilter(String str, int j) {
         try {
             // 跳过空
             if (str == null) {
@@ -221,8 +225,8 @@ public class ExcelRegex {
             }
             // 匹配汉字，去除英文
             String newStr = null;
-            if (i == 1) {
-                newStr = Regex.regex(str, "[\u4e00-\u9fa5\\,，]+", 0);
+            if (j == 1) {
+                newStr = Regex.regex(str, "[\u4e00-\u9fa5\\,、，]+", 0);
                 if (newStr.equals("")) {
                     log.warn("汉字有误：" + str);
                     return str;
@@ -279,26 +283,37 @@ public class ExcelRegex {
                 if (!Regex.regex(str, "[^\\d\\.\\-]", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
                     // 多余小数点
-                } else if (i == 2 && !Regex.regex(str, "\\.", 0).equals("")) {
+                } else if (j == 2 && !Regex.regex(str, "\\.", 0).equals("")) {
                     log.warn("数量不应该有小数点:" + str);
                     // 首位为0的情况
-                } else if (i == 2 && !Regex.regex(str, "^0\\d+$", 0).equals("")) {
+                } else if (j == 2 && !Regex.regex(str, "^0\\d+$", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
                     // 纠正横杠为小数点
-                } else if (i == 3 && !Regex.regex(str, "^\\-?\\d+\\-\\d+$", 0).equals("")) {
+                } else if (j > 2 && !Regex.regex(str, "^\\-?\\d+\\-\\d+$", 0).equals("")) {
                     newStr = str.replaceAll("-", ".");
                     log.warn("自动校对:" + str + " -> " + newStr);
                     str = newStr;
-                    // 小数点缺失正则匹配自动校对
-                } else if (i == 3 && !Regex.regex(str, "^-?\\d{3,}$", 0).equals("")) {
+                    // 小数点缺失
+                } else if (j > 2 && !Regex.regex(str, "^-?\\d{3,}$", 0).equals("")) {
                     newStr = str.substring(0, str.length() - 2) + "." + str.substring(str.length() - 2);
                     log.warn("自动校对小数点:" + str + " -> " + newStr);
                     str = newStr;
-                    // 小数点问题的情况
-                } else if (i == 3 && Regex.regex(str, "^\\-$|^\\d$|^\\-?\\d+\\.\\d{2}$", 0).equals("")) {
-                    log.warn("需要手动校对小数点:" + str);
+                    // 小数点位置问题
+                } else if (j > 2 && Regex.regex(str, "^\\-$|^\\d$|^\\-?\\d+\\.\\d{2}$", 0).equals("")) {
+                    // 补齐小数点
+                    if (j == 4 && Regex.regex(str, "^\\-?\\d+$", 0).equals("")) {
+                        newStr = str + ".00";
+                        log.warn("自动补齐:" + str + " -> " + newStr);
+                        str = newStr;
+                    } else if (j == 4 && Regex.regex(str, "^\\-?\\d+\\.\\d$", 0).equals("")) {
+                        newStr = str + "0";
+                        log.warn("自动补齐:" + str + " -> " + newStr);
+                        str = newStr;
+                    } else {
+                        log.warn("需要手动校对小数点:" + str);
+                    }
                     // 首位为0的情况
-                } else if (i == 3 && !Regex.regex(str, "^\\-?0\\d+\\.\\d+$", 0).equals("")) {
+                } else if (j > 2 && !Regex.regex(str, "^\\-?0\\d+\\.\\d+$", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
                 }
             }

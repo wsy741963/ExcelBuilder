@@ -21,13 +21,13 @@ import lombok.extern.slf4j.Slf4j;
 public class Main {
     public static void main(String[] args) {
         try {
-            System.out.println("\n请选择运行的程序:\n1.数据处理\n2.数据校验\n");
+            System.out.println("\n请选择运行的程序:\n1.数据处理\n2.字符校验\n3.字符校验并补齐两位小数");
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
             scanner.close();
 
             if (input != 1) {
-                ExcelRegex.excelRegex();
+                ExcelRegex.excelRegex(input);
                 return;
             }
 
