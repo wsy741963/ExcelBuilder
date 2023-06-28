@@ -301,11 +301,11 @@ public class ExcelRegex {
                     // 小数点位置问题
                 } else if (j > 2 && Regex.regex(str, "^\\-$|^\\d$|^\\-?\\d+\\.\\d{2}$", 0).equals("")) {
                     // 补齐小数点
-                    if (j == 4 && Regex.regex(str, "^\\-?\\d+$", 0).equals("")) {
+                    if (j == 4 && !Regex.regex(str, "^\\-?\\d+$", 0).equals("")) {
                         newStr = str + ".00";
                         log.warn("自动补齐:" + str + " -> " + newStr);
                         str = newStr;
-                    } else if (j == 4 && Regex.regex(str, "^\\-?\\d+\\.\\d$", 0).equals("")) {
+                    } else if (j == 4 && !Regex.regex(str, "^\\-?\\d+\\.\\d$", 0).equals("")) {
                         newStr = str + "0";
                         log.warn("自动补齐:" + str + " -> " + newStr);
                         str = newStr;
