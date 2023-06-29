@@ -286,7 +286,7 @@ public class ExcelRegex {
                 } else if (j == 2 && !Regex.regex(str, "\\.", 0).equals("")) {
                     log.warn("数量不应该有小数点:" + str);
                     // 首位为0的情况
-                } else if (j == 2 && !Regex.regex(str, "^0\\d+$", 0).equals("")) {
+                } else if (j == 2 && Regex.regex(str, "^\\-$|^[1-9]\\d*$", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
                     // 纠正横杠为小数点
                 } else if (j > 2 && !Regex.regex(str, "^\\-?\\d+\\-\\d+$", 0).equals("")) {
@@ -299,8 +299,8 @@ public class ExcelRegex {
                     log.warn("自动校对小数点:" + str + " -> " + newStr);
                     str = newStr;
                     // 小数点位置问题
-                } else if (j > 2 && Regex.regex(str, "^\\-$|^\\d$|^\\-?\\d+\\.\\d{2}$", 0).equals("")) {
-                    // 补齐小数点
+                } else if (j > 2 && Regex.regex(str, "^\\-$|^\\-?[1-9]\\d*\\.\\d{2}$", 0).equals("")) {
+                    // 补齐小数
                     if (j == 4 && !Regex.regex(str, "^\\-?\\d+$", 0).equals("")) {
                         newStr = str + ".00";
                         log.warn("自动补齐:" + str + " -> " + newStr);
@@ -312,9 +312,6 @@ public class ExcelRegex {
                     } else {
                         log.warn("需要手动校对小数点:" + str);
                     }
-                    // 首位为0的情况
-                } else if (j > 2 && !Regex.regex(str, "^\\-?0\\d+\\.\\d+$", 0).equals("")) {
-                    log.warn("需要手动校对:" + str);
                 }
             }
             return str;
