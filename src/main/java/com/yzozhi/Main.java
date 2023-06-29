@@ -29,6 +29,9 @@ public class Main {
             if (input != 1) {
                 ExcelRegex.excelRegex(input);
                 return;
+            } else if (input < 1 || input > 3) {
+                log.warn("输入错误!退出");
+                return;
             }
 
             long start = System.currentTimeMillis();
