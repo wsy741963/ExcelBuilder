@@ -299,7 +299,7 @@ public class ExcelRegex {
                     log.warn("自动校对小数点:" + str + " -> " + newStr);
                     str = newStr;
                     // 小数点位置问题
-                } else if (j > 2 && Regex.regex(str, "^\\-$|^\\-?[1-9]\\d*\\.\\d{2}$", 0).equals("")) {
+                } else if (j > 2 && Regex.regex(str, "^\\-$|^\\-?0\\.\\d{2}$|^\\-?[1-9]\\d*\\.\\d{2}$", 0).equals("")) {
                     // 补齐小数
                     if (j == 4 && !Regex.regex(str, "^\\-?\\d+$", 0).equals("")) {
                         newStr = str + ".00";
