@@ -286,7 +286,7 @@ public class ExcelRegex {
                 } else if (j == 2 && !Regex.regex(str, "\\.", 0).equals("")) {
                     log.warn("数量不应该有小数点:" + str);
                     // 首位为0的情况
-                } else if (j == 2 && Regex.regex(str, "^\\-$|^[1-9]\\d*$", 0).equals("")) {
+                } else if (j == 2 && Regex.regex(str, "^0$|^\\-$|^[1-9]\\d*$", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
                     // 纠正横杠为小数点
                 } else if (j > 2 && !Regex.regex(str, "^\\-?\\d+\\-\\d+$", 0).equals("")) {
