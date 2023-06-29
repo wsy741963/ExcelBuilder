@@ -309,7 +309,7 @@ public class ExcelRegex {
                         newStr = str + "0";
                         log.warn("自动补齐:" + str + " -> " + newStr);
                         str = newStr;
-                    } else {
+                    } else if (!str.equals("0")) {
                         log.warn("需要手动校对小数点:" + str);
                     }
                 }
