@@ -253,6 +253,7 @@ public class ExcelRegex {
                 newStr = newStr.replaceAll("Z", "2.");
                 newStr = newStr.replaceAll("g", "9");
                 newStr = newStr.replaceAll("G", "0.");
+                newStr = newStr.replaceAll("R", "8");
                 newStr = newStr.replaceAll("!", "1");
                 newStr = newStr.replaceAll("I", "1");
                 newStr = newStr.replaceAll("i", "1");
@@ -272,6 +273,7 @@ public class ExcelRegex {
                 newStr = newStr.replaceAll("\\^", ".2");
                 newStr = newStr.replaceAll("\\（x\\）", "00");
                 newStr = newStr.replaceAll("1X1", "00");
+                newStr = newStr.replaceAll("1M1", "00");
 
                 // 输出纠正记录到日志
                 if (!newStr.equals(str)) {
