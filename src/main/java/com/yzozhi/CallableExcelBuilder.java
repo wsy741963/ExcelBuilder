@@ -69,19 +69,19 @@ public class CallableExcelBuilder implements Callable<String> {
                               String location = "";
                               String sex = "";
                               if (Regex.regex(sheet, "城市", 0).equals("城市")) {
-                                    location = "城市";
+                                    location = "全国城市";
                               } else if (Regex.regex(sheet, "农村", 0).equals("农村")) {
-                                    location = "农村";
+                                    location = "全国农村";
                               } else if (Regex.regex(sheet, "全国", 0).equals("全国")) {
-                                    location = "全国";
+                                    location = "全国合计";
                               }
 
                               if (Regex.regex(sheet, "东部", 0).equals("东部")) {
-                                    location = "东部" + location;
+                                    location = "东部" + location + "地区";
                               } else if (Regex.regex(sheet, "中部", 0).equals("中部")) {
-                                    location = "中部" + location;
+                                    location = "中部" + location + "地区";
                               } else if (Regex.regex(sheet, "西部", 0).equals("西部")) {
-                                    location = "西部" + location;
+                                    location = "西部" + location + "地区";
                               }
 
                               if (Regex.regex(sheet, "合计", 0).equals("合计")) {
