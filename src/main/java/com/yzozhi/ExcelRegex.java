@@ -283,10 +283,10 @@ public class ExcelRegex {
 
                 // 识别数字以外字符
                 if (!Regex.regex(str, "[^\\d\\.\\-]", 0).equals("")) {
-                    log.warn("需要手动校对:" + str);
+                    log.warn("需要手动校对字符:" + str);
                     // 多余小数点
-                } else if (j == 2 && !Regex.regex(str, "\\.", 0).equals("")) {
-                    log.warn("数量不应该有小数点:" + str);
+                } else if (j == 2 && !Regex.regex(str, "\\.|^\\-\\d+$", 0).equals("")) {
+                    log.warn("数量不应该为负数或有小数点:" + str);
                     // 首位为0的情况
                 } else if (j == 2 && Regex.regex(str, "^0$|^\\-$|^[1-9]\\d*$", 0).equals("")) {
                     log.warn("需要手动校对:" + str);
