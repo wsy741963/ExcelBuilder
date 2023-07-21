@@ -231,6 +231,7 @@ public class ExcelRegex {
             // 匹配汉字，去除英文
             String newStr = null;
             if (j == 1) {
+                str = str.replaceAll(",", "，");
                 newStr = Regex.regex(str, "^[\u4e00-\u9fa5、，]+$", 0);
                 if (newStr.equals("")) {
                     log.warn("病因字符有误：" + str);
