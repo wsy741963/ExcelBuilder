@@ -218,24 +218,28 @@ public class ExcelRegex {
 
     public static String reFilter(String str, int j) {
         try {
-            // 跳过空
+
+            // 提示空
             if (str == null) {
                 log.warn("注意!空字符串");
                 return str;
             }
+
+            // 去空格
+            str = str.replaceAll(" ", "");
+
             // 匹配汉字，去除英文
             String newStr = null;
             if (j == 1) {
-                newStr = Regex.regex(str, "[\u4e00-\u9fa5\\,、，]+", 0);
+                newStr = Regex.regex(str, "^[\u4e00-\u9fa5、，]+$", 0);
                 if (newStr.equals("")) {
-                    log.warn("汉字有误：" + str);
+                    log.warn("病因字符有误：" + str);
                     return str;
                 }
                 return newStr;
             } else {
-                // 纠正数字规则
-                newStr = str.replaceAll(" ", "");
-                newStr = newStr.replaceAll("\\(\\)", "0");
+                // 数字纠正规则
+                newStr = str.replaceAll("\\(\\)", "0");
                 newStr = newStr.replaceAll("\\(", "1");
                 newStr = newStr.replaceAll("\\)", "1");
                 newStr = newStr.replaceAll("L", "1.");
@@ -284,36 +288,44 @@ public class ExcelRegex {
                 // 识别数字以外字符
                 if (!Regex.regex(str, "[^\\d\\.\\-]", 0).equals("")) {
                     log.warn("需要手动校对字符:" + str);
-                    // 多余小数点
-                } else if (j == 2 && !Regex.regex(str, "\\.|^\\-\\d+$", 0).equals("")) {
-                    log.warn("数量不应该为负数或有小数点:" + str);
-                    // 首位为0的情况
-                } else if (j == 2 && Regex.regex(str, "^0$|^\\-$|^[1-9]\\d*$", 0).equals("")) {
-                    log.warn("需要手动校对:" + str);
-                    // 纠正横杠为小数点
-                } else if (j > 2 && !Regex.regex(str, "^\\-?\\d+\\-\\d+$", 0).equals("")) {
+                    return str;
+                }
+
+                // 正整数验证
+                if (j == 2 && Regex.regex(str, "^\\-$|^\\d$|^[1-9]\\d+$", 0).equals("")) {
+                    log.warn("数量应为正整数:" + str);
+                    return str;
+                }
+
+                // 纠正横杠为小数点
+                if (j > 2 && !Regex.regex(str, "^\\d+\\-\\d+$", 0).equals("")) {
                     newStr = str.replaceAll("-", ".");
                     log.warn("自动校对:" + str + " -> " + newStr);
                     str = newStr;
-                    // 小数点缺失
-                } else if (j > 2 && !Regex.regex(str, "^-?\\d{3,}$", 0).equals("")) {
+                }
+
+                // 补齐小数点后位数
+                if (j == 4 && !Regex.regex(str, "^\\-?\\d+$", 0).equals("")) {
+                    newStr = str + ".00";
+                    log.warn("自动补齐:" + str + " -> " + newStr);
+                    str = newStr;
+                } else if (j == 4 && !Regex.regex(str, "^\\-?\\d+\\.\\d$", 0).equals("")) {
+                    newStr = str + "0";
+                    log.warn("自动补齐:" + str + " -> " + newStr);
+                    str = newStr;
+                }
+
+                // 自动校对小数点
+                if (j == 3 && !Regex.regex(str, "^-?\\d{3,}$", 0).equals("")) {
                     newStr = str.substring(0, str.length() - 2) + "." + str.substring(str.length() - 2);
                     log.warn("自动校对小数点:" + str + " -> " + newStr);
                     str = newStr;
-                    // 小数点位置问题
-                } else if (j > 2 && Regex.regex(str, "^\\-$|^\\-?0\\.\\d{2}$|^\\-?[1-9]\\d*\\.\\d{2}$", 0).equals("")) {
-                    // 补齐小数
-                    if (j == 4 && !Regex.regex(str, "^\\-?\\d+$", 0).equals("")) {
-                        newStr = str + ".00";
-                        log.warn("自动补齐:" + str + " -> " + newStr);
-                        str = newStr;
-                    } else if (j == 4 && !Regex.regex(str, "^\\-?\\d+\\.\\d$", 0).equals("")) {
-                        newStr = str + "0";
-                        log.warn("自动补齐:" + str + " -> " + newStr);
-                        str = newStr;
-                    } else if (!str.equals("0")) {
-                        log.warn("需要手动校对小数点:" + str);
-                    }
+                }
+
+                // 小数验证
+                if (j > 2 && Regex.regex(str, "^\\-$|^\\-?0\\.\\d{2}$|^\\-?[1-9]\\d*\\.\\d{2}$", 0).equals("")) {
+                    log.warn("小数有问题:" + str);
+                    return str;
                 }
             }
             return str;
