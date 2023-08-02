@@ -36,7 +36,7 @@ public class Main {
 
             long start = System.currentTimeMillis();
             // 创建线程池
-            ExecutorService pool = new ThreadPoolExecutor(5, 8, 6, TimeUnit.SECONDS, new ArrayBlockingQueue<>(5),
+            ExecutorService pool = new ThreadPoolExecutor(8, 8, 8, TimeUnit.SECONDS, new ArrayBlockingQueue<>(5),
                     Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
             // 遍历目录下文件，获取集合
             Collection<File> fl = FileUtils.listFiles(new File("./"), null, false);
