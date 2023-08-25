@@ -232,7 +232,7 @@ public class ExcelRegex {
             String newStr = null;
             if (j == 1) {
                 str = str.replaceAll(",", "，");
-                newStr = Regex.regex(str, "^[\u4e00-\u9fa5、，]+$", 0);
+                newStr = Regex.regex(str, "^[\\u4e00-\\u9fa5、，]+$", 0);
                 if (newStr.equals("")) {
                     log.warn("病因字符有误：" + str);
                     return str;
