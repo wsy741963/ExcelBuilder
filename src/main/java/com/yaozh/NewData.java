@@ -1,4 +1,4 @@
-package com.yzozhi;
+package com.yaozh;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.yzozhi;
+package com.yaozh;
 
 import lombok.Data;
 
